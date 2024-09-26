@@ -61,6 +61,8 @@ static struct {
 
   /* TODO: Add more commands */
 
+  {"si", "Execute N(default 1) instructions in a single step", cmd_si},
+
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))

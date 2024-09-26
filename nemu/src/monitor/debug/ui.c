@@ -37,7 +37,15 @@ static int cmd_q(char *args) {
 }
 
 static int cmd_si (char *args) {
-  
+  char *arg = strtok(NULL, " ");
+
+  if (arg == NULL) cpu_exec(1);
+  else {
+    uint64_t num = strtoul(arg, NULL, 10);
+    cpu_exec(num);
+  }
+
+  return 0;
 }
 
 static int cmd_help(char *args);

@@ -36,19 +36,11 @@ static int cmd_q(char *args) {
   return -1;
 }
 
-static int cmd_si (char *args) {
-  char *arg = strtok(NULL, " ");
-
-  if (arg == NULL) cpu_exec(1);
-  else {
-    uint64_t num = strtoul(arg, NULL, 10);
-    cpu_exec(num);
-  }
-
-  return 0;
-}
-
 static int cmd_help(char *args);
+
+static int cmd_si (char *args);
+
+static int cmd_info (char *args);
 
 static struct {
   char *name;
@@ -62,10 +54,31 @@ static struct {
   /* TODO: Add more commands */
 
   {"si", "Execute N(default 1) instructions in a single step", cmd_si},
-
+  {"info", "Print status of registers when argument is 'r', print infomations of watchpoints when argument is 'w'", cmd_info},
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
+
+static int cmd_info (char *args) {
+  char *arg = strtok(NULL, " ");
+
+  if (strcmp(arg, "r") == 0) {
+    isa_reg_display();
+  } else
+    printf("Unknown command '%s'\n", arg);
+}
+
+static int cmd_si (char *args) {
+  char *arg = strtok(NULL, " ");
+
+  if (arg == NULL) cpu_exec(1);
+  else {
+    uint64_t num = strtoul(arg, NULL, 10);
+    cpu_exec(num);
+  }
+
+  return 0;
+}
 
 static int cmd_help(char *args) {
   /* extract the first argument */

@@ -42,6 +42,8 @@ static int cmd_si (char *args);
 
 static int cmd_info (char *args);
 
+static int cmd_x (char *args);
+
 static struct {
   char *name;
   char *description;
@@ -55,6 +57,7 @@ static struct {
 
   {"si", "Execute N(default 1) instructions in a single step", cmd_si},
   {"info", "Print status of registers when argument is 'r', print infomations of watchpoints when argument is 'w'", cmd_info},
+  {"x", "Output N consecutive 4-bytes in hexadecimal using the expression EXPR as the starting memory address", cmd_x},
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
@@ -63,14 +66,14 @@ static int cmd_x (char *args) {
   char *arg = strtok(NULL, " ");
 
   if (arg == NULL) {
-    printf("Input the number of 4-bytes in decimal\n");
+    printf("Input the number of 4-bytes in decimal as 'N'\n");
     return 0;
   }
   int num_4bytes = strtol(arg, NULL, 10);
 
   arg = strtok(NULL, " ");
   if (arg == NULL) {
-    printf("Input the starting memory address in hexadecimal\n");
+    printf("Input the starting memory address in hexadecimal as 'EXPR'\n");
     return 0;
   }
   vaddr_t addr = strtoul(arg, NULL, 16);

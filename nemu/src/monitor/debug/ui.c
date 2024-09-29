@@ -59,6 +59,28 @@ static struct {
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
 
+static int cmd_x (char *args) {
+  char *arg = strtok(NULL, " ");
+
+  if (arg == NULL) {
+    printf("Input the number of 4-bytes in decimal\n");
+    return 0;
+  }
+  int num_4bytes = strtol(arg, NULL, 10);
+
+  arg = strtok(NULL, " ");
+  if (arg == NULL) {
+    printf("Input the starting memory address in hexadecimal\n");
+    return 0;
+  }
+  vaddr_t addr = strtoul(arg, NULL, 16);
+
+  for (int i = 0; i < num_4bytes; i ++)
+    printf("0x%08x  ", isa_vaddr_read(addr + i * 4, 4));
+
+  return 0;
+}
+
 static int cmd_info (char *args) {
   char *arg = strtok(NULL, " ");
 
@@ -73,7 +95,7 @@ static int cmd_si (char *args) {
 
   if (arg == NULL) cpu_exec(1);
   else {
-    uint64_t num = strtoul(arg, NULL, 10);
+    uint64_t num = strtoull(arg, NULL, 10);
     cpu_exec(num);
   }
 

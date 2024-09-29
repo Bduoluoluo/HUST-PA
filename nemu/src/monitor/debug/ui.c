@@ -80,6 +80,7 @@ static int cmd_x (char *args) {
 
   for (int i = 0; i < num_4bytes; i ++)
     printf("0x%08x  ", isa_vaddr_read(addr + i * 4, 4));
+  printf("\n");
 
   return 0;
 }

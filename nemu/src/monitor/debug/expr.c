@@ -42,7 +42,6 @@ static regex_t re[NR_REGEX] = {};
  * Therefore we compile them only once before any usage.
  */
 void init_regex() {
-  printf("aaaaaaaaaa\n");
   int i;
   char error_msg[128];
   int ret;

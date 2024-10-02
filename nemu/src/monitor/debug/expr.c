@@ -70,8 +70,6 @@ static bool make_token(char *e) {
 
   nr_token = 0;
 
-  printf("aaaaa\n");
-
   while (e[position] != '\0') {
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
@@ -106,6 +104,8 @@ static bool make_token(char *e) {
       return false;
     }
   }
+
+  printf("aaaaa\n");
 
   return true;
 }

@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
   // /* Receive commands from user. */
   // ui_mainloop(is_batch_mode);
 
-  char buf[1024] = "(1)";
+  char buf[1024] = "1+1";
   // scanf("%s", buf);
   bool success;
   uint32_t val = expr(buf, &success);

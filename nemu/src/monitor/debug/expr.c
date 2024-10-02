@@ -71,6 +71,7 @@ static bool make_token(char *e) {
   nr_token = 0;
 
   while (e[position] != '\0') {
+    printf("aaaaaaa\n");
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
@@ -200,7 +201,6 @@ uint32_t eval (int p, int q, bool *success) {
 
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
-    printf("aaaaaaaaa\n");
     *success = false;
     return 0;
   }

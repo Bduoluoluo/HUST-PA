@@ -4,7 +4,7 @@ int init_monitor(int, char *[]);
 void ui_mainloop(int);
 
 static char buf[65536];
-bool success;
+static bool success;
 
 int main(int argc, char *argv[]) {
   // /* Initialize the monitor. */

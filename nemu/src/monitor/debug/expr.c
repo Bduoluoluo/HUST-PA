@@ -105,8 +105,6 @@ static bool make_token(char *e) {
     }
   }
 
-  printf("aaaaa\n");
-
   return true;
 }
 

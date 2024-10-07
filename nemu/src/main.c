@@ -10,9 +10,9 @@ int main(int argc, char *argv[]) {
   /* Receive commands from user. */
   // ui_mainloop(is_batch_mode);
 
-  char str[65536];
+  char* str = NULL;
   bool flag = 0;
-  scanf("%s", str);
+  str = rl_gets();
   uint32_t ans = expr(str, &flag);
   if (flag == false) printf("Failed!\n");
   else printf("%u\n", ans);

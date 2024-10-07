@@ -24,7 +24,7 @@ static struct rule {
    * Pay attention to the precedence level of different rules.
    */
 
-  {"\\s+", TK_NOTYPE},    // spaces
+  {" +", TK_NOTYPE},    // spaces
   {"\\+", '+'},         // plus
   {"-", '-'},           // minus
   {"\\*", '*'},         // multiply
@@ -99,8 +99,6 @@ static bool make_token(char *e) {
         break;
       }
     }
-
-    printf("%d aa\n", i);
 
     if (i == NR_REGEX) {
       printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");

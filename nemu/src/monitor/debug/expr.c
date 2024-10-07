@@ -12,6 +12,7 @@ enum {
 
   /* TODO: Add more token types */
   TK_DEC,
+  TK_NEG,
 };
 
 static struct rule {
@@ -25,7 +26,7 @@ static struct rule {
 
   {" +", TK_NOTYPE},    // spaces
   {"\\+", '+'},         // plus
-  {"-+", '-'},          // minus
+  {"-", '-'},           // minus
   {"\\*", '*'},         // multiply
   {"/", '/'},           // divide
   {"\\(", '('},         // left bracket
@@ -163,9 +164,24 @@ uint32_t eval (int p, int q, bool *success) {
         return 0;
       }
     }
-    if (bracket_sta != 0 || (op_low == -1 && op_high == -1)) {
+    if (bracket_sta != 0) {
       *success = false;
       return 0;
+    }
+    if (op_low == -1 && op_high == -1) {
+      if (tokens[q].type != TK_DEC) {
+        *success = false;
+        return 0;
+      }
+      for (int i = p; i < q; i ++)
+        if (tokens[i].type != TK_NEG) {
+          *success = false;
+          return 0;
+        }
+      
+      uint32_t val = eval(q, q, success);
+      if ((q - p) & 1) return -val;
+      else return val;
     }
 
     if (op_low != -1) op = op_low;
@@ -176,8 +192,7 @@ uint32_t eval (int p, int q, bool *success) {
         val = val_l + val_r;
         break;
       case '-':
-        if (strlen(tokens[op].str) & 1) val = val_l - val_r;
-        else val = val_l + val_r;
+        val = val_l - val_r;
         break;
       case '*':
         val = val_l * val_r;
@@ -194,6 +209,22 @@ uint32_t eval (int p, int q, bool *success) {
   }
 }
 
+bool check_unary_opt (int i) {
+  if (i == 0) return true;
+  switch (tokens[i - 1].type) {
+    case '+':
+    case '-':
+    case '*':
+    case '/':
+    case '(':
+    case TK_NEG:
+    case TK_EQ:
+      return true;
+    default:
+      return false;
+  }
+}
+
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
@@ -201,6 +232,10 @@ uint32_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
+
+  for (int i = 0; i < nr_token; i ++)
+    if (tokens[i].type == '-' && check_unary_opt(i))
+      tokens[i].type = TK_NEG;
   
   *success = true;
   uint32_t val = eval(0, nr_token - 1, success);

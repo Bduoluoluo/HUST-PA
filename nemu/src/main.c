@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
   bool flag = 0;
   scanf("%s", str);
   uint32_t ans = expr(str, &flag);
-  if (flag == false) printf("Failed!");
+  if (flag == false) printf("Failed!\n");
   else printf("%u\n", ans);
 
   return 0;

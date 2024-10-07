@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
 
   char* str = NULL;
   bool flag = 0;
-  str = rl_gets();
+  str = readline("");
   uint32_t ans = expr(str, &flag);
   if (flag == false) printf("Failed!\n");
   else printf("%u\n", ans);

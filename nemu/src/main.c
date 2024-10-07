@@ -8,7 +8,14 @@ int main(int argc, char *argv[]) {
   int is_batch_mode = init_monitor(argc, argv);
 
   /* Receive commands from user. */
-  ui_mainloop(is_batch_mode);
+  // ui_mainloop(is_batch_mode);
+
+  char str[65536];
+  bool flag = 0;
+  scanf("%s", str);
+  uint32_t ans = expr(str, &flag);
+  if (flag == false) printf("Failed!");
+  else printf("%u\n", ans);
 
   return 0;
 }

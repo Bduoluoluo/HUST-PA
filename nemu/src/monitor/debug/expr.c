@@ -183,10 +183,6 @@ uint32_t eval (int p, int q, bool *success) {
         val = val_l * val_r;
         break;
       case '/':
-        if (val_r == 0) {
-          *success = false;
-          return 0;
-        }
         val = val_l / val_r;
         break;
       default:

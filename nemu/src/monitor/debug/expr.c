@@ -233,7 +233,7 @@ uint32_t expr(char *e, bool *success) {
 
   /* TODO: Insert codes to evaluate the expression. */
 
-  printf("%d\n", nr_token);
+  printf("%c\n", tokens[0].type);
 
   for (int i = 0; i < nr_token; i ++)
     if (tokens[i].type == '-' && check_unary_opt(i))

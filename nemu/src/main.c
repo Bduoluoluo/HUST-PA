@@ -1,4 +1,6 @@
 #include "monitor/expr.h"
+#include <readline/readline.h>
+#include <readline/history.h>
 
 int init_monitor(int, char *[]);
 void ui_mainloop(int);

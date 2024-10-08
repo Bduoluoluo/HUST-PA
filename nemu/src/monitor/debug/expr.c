@@ -200,23 +200,22 @@ uint32_t eval (int p, int q, bool *success) {
     }
 
     if (op_0 == -1 && op_1 == -1 && op_2 == -1) {
-      uint32_t val = eval(q, q, success);
+      u_int32_t val = eval(p + 1, q, success);
       if (*success == false)
         return 0;
-      
-      for (int i = q - 1; i >= p; i --) {
-        switch (tokens[i].type) {
-          case TK_NEG:
-            val = -val;
-            break;
-          case TK_DEREf:
-            val = isa_vaddr_read(val, 4);
-            break;
-          default:
-            *success = false;
-            return 0;
-        }
+
+      switch (tokens[p].type) {
+        case TK_NEG:
+          val = -val;
+          break;
+        case TK_DEREf:
+          val = isa_vaddr_read(val, 4);
+          break;
+        default:
+          *success = false;
+          return 0;
       }
+
       return val;
     }
 

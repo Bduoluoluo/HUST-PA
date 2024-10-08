@@ -13,6 +13,11 @@ enum {
   /* TODO: Add more token types */
   TK_DEC,
   TK_NEG,
+  TK_HEX,
+  TK_REG,
+  TK_NEQ,
+  TK_AND,
+  TK_DEREf,
 };
 
 static struct rule {
@@ -24,15 +29,19 @@ static struct rule {
    * Pay attention to the precedence level of different rules.
    */
 
-  {" +", TK_NOTYPE},    // spaces
-  {"\\+", '+'},         // plus
-  {"-", '-'},           // minus
-  {"\\*", '*'},         // multiply
-  {"/", '/'},           // divide
-  {"\\(", '('},         // left bracket
-  {"\\)", ')'},         // right bracket
-  {"[0-9]+", TK_DEC},   // decimal integer
-  {"==", TK_EQ}         // equal
+  {" +", TK_NOTYPE},                  // spaces
+  {"\\+", '+'},                       // plus
+  {"-", '-'},                         // minus
+  {"\\*", '*'},                       // multiply
+  {"/", '/'},                         // divide
+  {"\\(", '('},                       // left bracket
+  {"\\)", ')'},                       // right bracket
+  {"0[xX][0-9A-Fa-f]+", TK_HEX},      // hexadecimal integer
+  {"[0-9]+", TK_DEC},                 // decimal integer
+  {"\\$[0-9a-z]+", TK_REG},           // register name
+  {"==", TK_EQ},                      // equal
+  {"!=", TK_NEQ},                     // not equal
+  {"&&", TK_AND},                     // and
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -127,15 +136,29 @@ uint32_t eval (int p, int q, bool *success) {
     *success = false;
     return 0;
   } else if (p == q) {
-    if (tokens[p].type != TK_DEC) {
-      *success = false;
-      return 0;
-    } else
-      return strtoul(tokens[p].str, NULL, 10);
+    uint32_t val = 0;
+    switch (tokens[p].type) {
+      case TK_DEC:
+        val = strtoul(tokens[p].str, NULL, 10);
+        break;
+      case TK_HEX:
+        val = strtoul(tokens[p].str, NULL, 16);
+        break;
+      case TK_REG:
+        bool is_reg = true;
+        val = isa_reg_str2val(tokens[p].str + 1, &is_reg);
+        if (is_reg == false)
+          *success = false;
+        break;
+      default:
+        *success = false;
+        break;
+    }
+    return val;
   } else if (check_parentheses(p, q) == true) {
     return eval(p + 1, q - 1, success);
   } else {
-    int op_low = -1, op_high = -1, op, bracket_sta = 0;
+    int op_0 = -1, op_1 = -1, op_2 = -1, op, bracket_sta = 0;
 
     for (int i = p; i <= q; i ++) {
       switch (tokens[i].type) {
@@ -145,15 +168,21 @@ uint32_t eval (int p, int q, bool *success) {
         case ')':
           bracket_sta --;
           break;
+        case TK_EQ:
+        case TK_NEQ:
+        case TK_AND:
+          if (bracket_sta == 0)
+            op_0 = i;
+          break;
         case '+':
         case '-':
           if (bracket_sta == 0)
-            op_low = i;
+            op_1 = i;
           break;
         case '*':
         case '/':
           if (bracket_sta == 0)
-            op_high = i;
+            op_2 = i;
           break;
         default:
           break;
@@ -164,28 +193,37 @@ uint32_t eval (int p, int q, bool *success) {
         return 0;
       }
     }
+
     if (bracket_sta != 0) {
       *success = false;
       return 0;
     }
-    if (op_low == -1 && op_high == -1) {
-      if (tokens[q].type != TK_DEC) {
-        *success = false;
-        return 0;
-      }
-      for (int i = p; i < q; i ++)
-        if (tokens[i].type != TK_NEG) {
-          *success = false;
-          return 0;
-        }
-      
+
+    if (op_0 == -1 && op_1 == -1 && op_2 == -1) {
       uint32_t val = eval(q, q, success);
-      if ((q - p) & 1) return -val;
-      else return val;
+      if (*success == false)
+        return 0;
+      
+      for (int i = q - 1; i >= p; i --) {
+        switch (tokens[i].type) {
+          case TK_NEG:
+            val = -val;
+            break;
+          case TK_DEREf:
+            val = isa_vaddr_read(val, 4);
+            break;
+          default:
+            *success = false;
+            return 0;
+        }
+      }
+      return val;
     }
 
-    if (op_low != -1) op = op_low;
-    else op = op_high;
+    if (op_0 != -1) op = op_0;
+    else if (op_1 != -1) op = op_1;
+    else op = op_2;
+
     uint32_t val_l = eval(p, op - 1, success), val_r = eval(op + 1, q, success), val = 0;
     switch (tokens[op].type) {
       case '+':
@@ -199,6 +237,15 @@ uint32_t eval (int p, int q, bool *success) {
         break;
       case '/':
         val = val_l / val_r;
+        break;
+      case TK_EQ:
+        val = val_l == val_r;
+        break;
+      case TK_NEQ:
+        val = val_l != val_r;
+        break;
+      case TK_AND:
+        val = val_l && val_r;
         break;
       default:
         *success = false;
@@ -219,6 +266,9 @@ bool check_unary_opt (int i) {
     case '(':
     case TK_NEG:
     case TK_EQ:
+    case TK_NEQ:
+    case TK_AND:
+    case TK_DEREf:
       return true;
     default:
       return false;
@@ -233,9 +283,13 @@ uint32_t expr(char *e, bool *success) {
 
   /* TODO: Insert codes to evaluate the expression. */
 
-  for (int i = 0; i < nr_token; i ++)
+  for (int i = 0; i < nr_token; i ++) {
     if (tokens[i].type == '-' && check_unary_opt(i))
       tokens[i].type = TK_NEG;
+    
+    if (tokens[i].type == '*' && check_unary_opt(i))
+      tokens[i].type = TK_DEREf;
+  }
   
   *success = true;
   uint32_t val = eval(0, nr_token - 1, success);

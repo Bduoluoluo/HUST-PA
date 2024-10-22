@@ -2,6 +2,7 @@
 #include "monitor/expr.h"
 #include "monitor/watchpoint.h"
 #include "nemu.h"
+#include "../../isa/riscv32/include/isa/reg.h"
 
 #include <stdlib.h>
 #include <readline/readline.h>
@@ -92,6 +93,8 @@ static int cmd_info (char *args) {
     isa_reg_display();
   } else
     printf("Unknown command '%s'\n", arg);
+  
+  return 0;
 }
 
 static int cmd_si (char *args) {

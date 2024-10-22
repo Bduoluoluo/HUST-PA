@@ -14,6 +14,8 @@ typedef struct {
 
 } CPU_state;
 
+void isa_reg_display ();
+
 static inline int check_reg_index(int index) {
   assert(index >= 0 && index < 32);
   return index;

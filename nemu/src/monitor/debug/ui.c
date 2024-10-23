@@ -43,6 +43,8 @@ static int cmd_si (char *args);
 
 static int cmd_info (char *args);
 
+static int cmd_q (char *args);
+
 static int cmd_x (char *args);
 
 static struct {
@@ -58,6 +60,7 @@ static struct {
 
   {"si", "Execute N(default 1) instructions in a single step", cmd_si},
   {"info", "Print status of registers when argument is 'r', print infomations of watchpoints when argument is 'w'", cmd_info},
+  {"q", "Print the value of the expression EXPR", cmd_q},
   {"x", "Output N consecutive 4-bytes in hexadecimal using the expression EXPR as the starting memory address", cmd_x},
 };
 
@@ -72,16 +75,40 @@ static int cmd_x (char *args) {
   }
   int num_4bytes = strtol(arg, NULL, 10);
 
-  arg = strtok(NULL, " ");
   if (arg == NULL) {
-    printf("Input the starting memory address in hexadecimal as 'EXPR'\n");
+    printf("Input the starting memory address as 'EXPR'\n");
     return 0;
   }
-  vaddr_t addr = strtoul(arg, NULL, 16);
+
+  bool success = false;
+  vaddr_t addr = expr(arg, &success);
+  if (success == false) {
+    printf("The input 'EXPR' is wrong\n");
+    return 0;
+  }
 
   for (int i = 0; i < num_4bytes; i ++)
     printf("0x%08x  ", isa_vaddr_read(addr + i * 4, 4));
   printf("\n");
+
+  return 0;
+}
+
+static int cmd_p (char *args) {
+  char *arg = strtok(NULL, " ");
+
+  if (arg == NULL) {
+    printf("Input the 'EXPR'\n");
+    return 0;
+  }
+
+  bool success = false;
+  uint32_t val = expr(arg, &success);
+  if (success == false) {
+    printf("The input 'EXPR' is wrong\n");
+    return 0;
+  }
+  printf("%0x%08x\n", val);
 
   return 0;
 }

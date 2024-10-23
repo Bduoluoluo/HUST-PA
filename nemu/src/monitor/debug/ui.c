@@ -95,16 +95,14 @@ static int cmd_x (char *args) {
 }
 
 static int cmd_p (char *args) {
-  char *arg = strtok(NULL, " ");
-
-  if (arg == NULL) {
+  if (args == NULL) {
     printf("Input the 'EXPR'\n");
     return 0;
   }
 
-  printf("%s\n", arg);
+  printf("%s\n", args);
   bool success = false;
-  uint32_t val = expr(arg, &success);
+  uint32_t val = expr(args, &success);
   if (success == false) {
     printf("The input 'EXPR' is wrong\n");
     return 0;

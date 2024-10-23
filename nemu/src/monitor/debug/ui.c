@@ -75,6 +75,8 @@ static int cmd_x (char *args) {
   }
   int num_4bytes = strtol(arg, NULL, 10);
 
+  printf("%s\n", args);
+
   if (arg == NULL) {
     printf("Input the starting memory address as 'EXPR'\n");
     return 0;

@@ -67,11 +67,8 @@ static struct {
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
 
 static int cmd_x (char *args) {
-  printf("%s\n", args);
-
-  char *arg = strtok(args, " ");
-
-  printf("%s\n", args);
+  char *args_end = args + strlen(args);
+  char *arg = strtok(NULL, " ");
 
   if (arg == NULL) {
     printf("Input the number of 4-bytes in decimal as 'N'\n");
@@ -79,10 +76,9 @@ static int cmd_x (char *args) {
   }
   int num_4bytes = strtol(arg, NULL, 10);
 
-  char *args_end = args + strlen(args);
   args += strlen(arg) + 1;
 
-  printf("%s %u %u\n", args, args_end);
+  printf("%s %u %u\n", args, args, args_end);
 
   if (args >= args_end) {
     printf("Input the starting memory address as 'EXPR'\n");

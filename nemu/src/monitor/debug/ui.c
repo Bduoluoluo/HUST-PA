@@ -80,7 +80,7 @@ static int cmd_x (char *args) {
 
   printf("%s\n", args);
 
-  if (args + strlen(args) >= args_end) {
+  if (args >= args_end) {
     printf("Input the starting memory address as 'EXPR'\n");
     return 0;
   }

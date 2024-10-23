@@ -69,7 +69,7 @@ static struct {
 static int cmd_x (char *args) {
   printf("%s\n", args);
 
-  char *arg = strtok(NULL, " ");
+  char *arg = strtok(args, " ");
 
   printf("%s\n", args);
 

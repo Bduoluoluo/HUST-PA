@@ -77,15 +77,10 @@ static int cmd_x (char *args) {
   int num_4bytes = strtol(arg, NULL, 10);
 
   args += strlen(arg) + 1;
-
-  printf("%s %u %u\n", args, args, args_end);
-
   if (args >= args_end) {
     printf("Input the starting memory address as 'EXPR'\n");
     return 0;
   }
-
-  
 
   bool success = false;
   vaddr_t addr = expr(arg, &success);

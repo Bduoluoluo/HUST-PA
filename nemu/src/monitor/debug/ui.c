@@ -75,6 +75,7 @@ static int cmd_x (char *args) {
   }
   int num_4bytes = strtol(arg, NULL, 10);
 
+  arg = strtok(NULL, " ");
   printf("%s\n", args);
 
   if (arg == NULL) {

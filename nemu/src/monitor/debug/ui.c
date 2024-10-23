@@ -102,6 +102,7 @@ static int cmd_p (char *args) {
     return 0;
   }
 
+  printf("%s\n", arg);
   bool success = false;
   uint32_t val = expr(arg, &success);
   if (success == false) {

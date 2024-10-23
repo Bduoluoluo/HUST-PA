@@ -108,7 +108,7 @@ static int cmd_p (char *args) {
     printf("The input 'EXPR' is wrong\n");
     return 0;
   }
-  printf("%0x%08x\n", val);
+  printf("0x%08x\n", val);
 
   return 0;
 }

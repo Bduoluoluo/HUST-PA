@@ -71,7 +71,7 @@ static int cmd_x (char *args) {
 
   char *arg = strtok(NULL, " ");
 
-  
+  printf("%s\n", args);
 
   if (arg == NULL) {
     printf("Input the number of 4-bytes in decimal as 'N'\n");

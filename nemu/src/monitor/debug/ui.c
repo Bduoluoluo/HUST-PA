@@ -67,9 +67,11 @@ static struct {
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
 
 static int cmd_x (char *args) {
+  printf("%s\n", args);
+
   char *arg = strtok(NULL, " ");
 
-  printf("%s\n", args);
+  
 
   if (arg == NULL) {
     printf("Input the number of 4-bytes in decimal as 'N'\n");

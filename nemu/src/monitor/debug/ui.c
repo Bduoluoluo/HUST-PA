@@ -43,7 +43,7 @@ static int cmd_si (char *args);
 
 static int cmd_info (char *args);
 
-static int cmd_q (char *args);
+static int cmd_p (char *args);
 
 static int cmd_x (char *args);
 
@@ -60,7 +60,7 @@ static struct {
 
   {"si", "Execute N(default 1) instructions in a single step", cmd_si},
   {"info", "Print status of registers when argument is 'r', print infomations of watchpoints when argument is 'w'", cmd_info},
-  {"q", "Print the value of the expression EXPR", cmd_q},
+  {"p", "Print the value of the expression EXPR", cmd_p},
   {"x", "Output N consecutive 4-bytes in hexadecimal using the expression EXPR as the starting memory address", cmd_x},
 };
 

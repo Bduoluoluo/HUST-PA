@@ -61,7 +61,7 @@ static struct {
   {"p", "Print the value of the expression EXPR", cmd_p},
   {"x", "Output N consecutive 4-bytes in hexadecimal with the expression EXPR as the starting memory address", cmd_x},
   {"w", "Add a new watchpoint with the expression EXPR", cmd_w},
-  {"d", "Delete the watchpoint with the NO of N", cmd_w},
+  {"d", "Delete the watchpoint with the NO of N", cmd_d},
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
@@ -150,7 +150,7 @@ static int cmd_info (char *args) {
   if (strcmp(arg, "r") == 0) {
     isa_reg_display();
   } else if (strcmp(arg, "w") == 0) {
-    
+
   } else
     printf("Unknown command '%s'\n", arg);
   

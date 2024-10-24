@@ -20,7 +20,7 @@ void init_wp_pool() {
 
 /* TODO: Implement the functionality of watchpoint */
 
-WP* new_wp () {
+void new_wp (const char *args, uint32_t val) {
   if (free_ == NULL)
     assert(0);
   
@@ -29,21 +29,23 @@ WP* new_wp () {
   wp->next = head; // insert wp into head link
   head = wp;
 
-  return wp;
+  strcpy(wp->expr, args);
+  wp->last_val = val;
 }
 
-void free_wp (WP *wp) {
-  if (wp == NULL)
-    return;
+void free_wp (int NO) {
+  WP *wp = NULL;
 
-  if (head == wp) { // wp is head
+  if (head->NO == NO) { // NO is head
+    wp = head;
     head = wp->next;
     wp->next = free_;
     free_ = wp;
   } else {
     WP *point = head;
-    while (point->next != NULL) { // erase wp from head link
-      if (point->next == wp) {
+    while (point->next != NULL) {
+      if (point->next->NO == NO) {
+        wp = point->next; // erase wp from head link
         point->next = wp->next;
         wp->next = free_; // insert wp into free_ link
         free_ = wp;
@@ -51,5 +53,15 @@ void free_wp (WP *wp) {
       }
       point = point->next;
     }
+  }
+}
+
+void watchpoint_display () {
+  WP *point = head;
+  while (point != NULL) {
+    printf("Watchpoint %d:\n", point->NO);
+    printf("EXPR: %s\n", point->expr);
+    printf("Value: %u\n\n", point->last_val);
+    point = point->next;
   }
 }

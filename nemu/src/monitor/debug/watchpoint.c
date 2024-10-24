@@ -34,8 +34,9 @@ void new_wp (const char *args, uint32_t val) {
 }
 
 void free_wp (int NO) {
-  WP *wp = NULL;
+  if (head == NULL) return; // no watchpoint
 
+  WP *wp = NULL;
   if (head->NO == NO) { // NO is head
     wp = head;
     head = wp->next;

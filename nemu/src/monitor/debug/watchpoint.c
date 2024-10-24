@@ -60,9 +60,30 @@ void free_wp (int NO) {
 void watchpoint_display () {
   WP *point = head;
   while (point != NULL) {
-    printf("Watchpoint %d:\n", point->NO);
+    printf("\nWatchpoint %d:\n", point->NO);
     printf("EXPR: %s\n", point->expr);
     printf("Value: %u\n\n", point->last_val);
+    point = point->next;
+  }
+}
+
+bool check_watchpoint () {
+  bool is_changed = false;
+
+  WP *point = head;
+  while (point != NULL) {
+    bool success = true;
+    uint32_t new_val = expr(point->expr, &success);
+    if (new_val != point->last_val) {
+      printf("\nWatchpoint %d:\n", point->NO);
+      printf("EXPR: %s\n", point->expr);
+      printf("Old value: %u\n", point->last_val);
+      printf("New value: %u\n\n", new_val);
+
+      point->last_val = new_val;
+      is_changed = true;
+    }
+
     point = point->next;
   }
 }

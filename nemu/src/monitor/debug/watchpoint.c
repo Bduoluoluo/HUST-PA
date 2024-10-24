@@ -86,4 +86,6 @@ bool check_watchpoint () {
 
     point = point->next;
   }
+
+  return is_changed;
 }

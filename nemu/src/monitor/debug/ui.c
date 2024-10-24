@@ -150,7 +150,7 @@ static int cmd_info (char *args) {
   if (strcmp(arg, "r") == 0) {
     isa_reg_display();
   } else if (strcmp(arg, "w") == 0) {
-
+    watchpoint_display();
   } else
     printf("Unknown command '%s'\n", arg);
   

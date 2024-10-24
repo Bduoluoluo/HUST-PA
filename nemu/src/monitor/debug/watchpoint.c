@@ -29,8 +29,6 @@ void new_wp (const char *args, uint32_t val) {
   wp->next = head; // insert wp into head link
   head = wp;
 
-  printf("%u\n", head);
-
   strcpy(wp->expr, args);
   wp->last_val = val;
 }

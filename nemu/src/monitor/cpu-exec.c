@@ -38,8 +38,6 @@ void cpu_exec(uint64_t n) {
     default: nemu_state.state = NEMU_RUNNING;
   }
 
-  printf("%d aaaaaaaaaaaaa\n", nemu_state.state);
-
   for (; n > 0; n --) {
     __attribute__((unused)) vaddr_t ori_pc = cpu.pc;
 
@@ -80,7 +78,6 @@ void cpu_exec(uint64_t n) {
     if (nemu_state.state != NEMU_RUNNING) break;
   }
 
-  printf("%d bbbbbbbbbbbb\n", nemu_state.state);
   switch (nemu_state.state) {
     case NEMU_RUNNING: nemu_state.state = NEMU_STOP; break;
 

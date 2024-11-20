@@ -22,6 +22,7 @@ typedef struct {
   char str[OP_STR_SIZE];
 } Operand;
 
+// #include "isa/decode.h"
 #include "../src/isa/riscv32/include/isa/decode.h"
 
 typedef struct {

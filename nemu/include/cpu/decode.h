@@ -23,6 +23,7 @@ typedef struct {
 } Operand;
 
 #include "isa/decode.h"
+#include "../src/isa/riscv32/include/isa/decode.h"
 
 typedef struct {
   uint32_t opcode;

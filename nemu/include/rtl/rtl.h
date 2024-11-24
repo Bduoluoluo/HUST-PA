@@ -166,6 +166,7 @@ static inline void rtl_mux(rtlreg_t* dest, const rtlreg_t* cond, const rtlreg_t*
   // dest <- (cond ? src1 : src2)
   if (*cond) *dest = *src1;
   else *dest = *src2;
+  
 }
 
 #include "isa/rtl.h"

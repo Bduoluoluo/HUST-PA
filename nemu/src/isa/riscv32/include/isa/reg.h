@@ -29,4 +29,6 @@ static inline const char* reg_name(int index, int width) {
   return regsl[index];
 }
 
+uint32_t isa_reg_str2val (const char *s, bool *success);
+
 #endif

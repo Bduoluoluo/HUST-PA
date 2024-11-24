@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "memory/memory.h"
+// #include "isa/reg.h"
 #include "../src/isa/riscv32/include/isa/reg.h"
 
 extern CPU_state cpu;

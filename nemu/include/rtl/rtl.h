@@ -132,12 +132,18 @@ void interpret_rtl_exit(int state, vaddr_t halt_pc, uint32_t halt_ret);
 
 static inline void rtl_not(rtlreg_t *dest, const rtlreg_t* src1) {
   // dest <- ~src1
-  TODO();
+  rtl_xori(dest, src1, 0xffffffff);
 }
 
 static inline void rtl_sext(rtlreg_t* dest, const rtlreg_t* src1, int width) {
   // dest <- signext(src1[(width * 8 - 1) .. 0])
-  TODO();
+  rtl_li(&ir, width); // ir := width
+  rtl_mv(&t0, &ir); // t0 := ir
+  rtl_li(&ir, 4); // ir := 4
+  rtl_sub(&t1, &ir, &t0); // t1 := ir - t0
+  rtl_shli(&t0, &t1, 3); // t0 := t1 << 3
+  rtl_shl(&t1, src1, &t0); // t1 := src1 << t0
+  rtl_sar(dest, &t1, &t0); // dest := t1 >> t0
 }
 
 static inline void rtl_setrelopi(uint32_t relop, rtlreg_t *dest,
@@ -148,12 +154,18 @@ static inline void rtl_setrelopi(uint32_t relop, rtlreg_t *dest,
 
 static inline void rtl_msb(rtlreg_t* dest, const rtlreg_t* src1, int width) {
   // dest <- src1[width * 8 - 1]
-  TODO();
+  rtl_li(&ir, width); // ir := width
+  rtl_mv(&t0, &ir); // t0 := ir
+  rtl_shli(&t1, &t0, 3); // t1 := t0 << 3
+  rtl_subi(&t0, &t1, 1); // t0 := t1 - 1
+  rtl_shr(&t1, src1, &t0); // t1 := src1 >> t0
+  rtl_addi(dest, &t1, 1); // dest := t1 & 1
 }
 
 static inline void rtl_mux(rtlreg_t* dest, const rtlreg_t* cond, const rtlreg_t* src1, const rtlreg_t* src2) {
   // dest <- (cond ? src1 : src2)
-  TODO();
+  if (*cond) *dest = *src1;
+  else *dest = *src2;
 }
 
 #include "isa/rtl.h"

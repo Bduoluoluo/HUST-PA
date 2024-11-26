@@ -26,7 +26,7 @@ make_DHelper (I) {
   decode_op_r(id_src, decinfo.isa.instr.rs1, true);
   decode_op_i(id_src2, decinfo.isa.instr.simm11_0, true);
 
-  // print_Dop(id_src->str, OP_STR_SIZE, "%s,%d", reg_name(id_src->reg, 4), id_src2->val);
+  print_Dop(id_src->str, OP_STR_SIZE, "%s,%d", reg_name(id_src->reg, 4), id_src2->val);
 
   decode_op_r(id_dest, decinfo.isa.instr.rd, false);
 }

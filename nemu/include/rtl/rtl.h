@@ -159,7 +159,7 @@ static inline void rtl_msb(rtlreg_t* dest, const rtlreg_t* src1, int width) {
   rtl_shli(&t1, &t0, 3); // t1 := t0 << 3
   rtl_subi(&t0, &t1, 1); // t0 := t1 - 1
   rtl_shr(&t1, src1, &t0); // t1 := src1 >> t0
-  rtl_addi(dest, &t1, 1); // dest := t1 & 1
+  rtl_andi(dest, &t1, 1); // dest := t1 & 1
 }
 
 static inline void rtl_mux(rtlreg_t* dest, const rtlreg_t* cond, const rtlreg_t* src1, const rtlreg_t* src2) {

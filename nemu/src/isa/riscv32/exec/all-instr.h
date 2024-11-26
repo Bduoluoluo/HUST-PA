@@ -1,6 +1,7 @@
 #include "cpu/exec.h"
 
 make_EHelper(lui);
+make_EHelper (auipc);
 make_EHelper (addi);
 
 make_EHelper(ld);

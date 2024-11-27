@@ -15,4 +15,6 @@ make_EHelper (jalr) {
     rtl_add(&s0, &id_src->val, &id_src2->val);
     rtl_andi(&s1, &s0, ~1);
     rtl_jr(&s1);
+
+    print_asm_template3(jalr);
 }

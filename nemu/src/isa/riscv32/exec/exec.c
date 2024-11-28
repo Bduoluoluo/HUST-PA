@@ -46,6 +46,7 @@ static OpcodeEntry ropt_table [8] = {
 };
 
 static make_EHelper (ropt) {
+  printf("aaaaaaaaaaaaaaaa\n");
   decinfo.width = ropt_table[decinfo.isa.instr.funct3].width;
   idex(pc, &ropt_table[decinfo.isa.instr.funct3]);
 }

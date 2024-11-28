@@ -3,6 +3,7 @@
 make_EHelper (lui);
 make_EHelper (auipc);
 make_EHelper (addi);
+make_EHelper (sltiu);
 make_EHelper (add);
 make_EHelper (sltu);
 make_EHelper (xor);

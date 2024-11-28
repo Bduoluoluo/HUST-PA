@@ -21,7 +21,7 @@ static make_EHelper(store) {
 
 // opcode 0010011
 static OpcodeEntry iopt_table [8] = {
-  EX(addi), EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY
+  EX(addi), EMPTY, EMPTY, EX(sltiu), EMPTY, EMPTY, EMPTY, EMPTY
 };
 
 static make_EHelper (iopt) {

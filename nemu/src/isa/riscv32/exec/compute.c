@@ -14,11 +14,20 @@ make_EHelper (auipc) {
 }
 
 // opcode 0010011
+// fun3 000
 make_EHelper (addi) {
   rtl_add(&s0, &id_src->val, &id_src2->val);
   rtl_sr(id_dest->reg, &s0, 4);
 
   print_asm_template3(addi);
+}
+
+// fun3 011
+make_EHelper (sltiu) {
+  rtl_setrelop(RELOP_LTU, &s0, &id_src->val, &id_src2->val);
+  rtl_sr(id_dest->reg, &s0, 4);
+  
+  print_asm_template3(sltiu);
 }
 // --------------
 

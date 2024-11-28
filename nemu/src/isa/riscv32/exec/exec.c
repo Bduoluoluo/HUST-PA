@@ -44,39 +44,43 @@ static make_EHelper (iopt) {
 // opcode 0110011
 static OpcodeEntry ropt_000_table [] = {
   EX(add),    // 0000000
+  EMPTY
 };
 static OpcodeEntry ropt_011_table [] = {
   EX(sltu),   // 0000000
+  EMPTY
 };
 static OpcodeEntry ropt_100_table [] = {
   EX(xor),    // 0000000
+  EMPTY
 };
 static OpcodeEntry ropt_110_table [] = {
   EX(or),     // 0000000
+  EMPTY
 };
 
 static make_EHelper (ropt_000) {
   switch (decinfo.isa.instr.funct7) {
     case 0x0000000: idex(pc, &ropt_000_table[0]); break;
-    default: assert(0);
+    default: idex(pc, &ropt_000_table[1]);
   }
 }
 static make_EHelper (ropt_011) {
   switch (decinfo.isa.instr.funct7) {
     case 0x0000000: idex(pc, &ropt_011_table[0]); break;
-    default: assert(0);
+    default: idex(pc, &ropt_011_table[1]);
   }
 }
 static make_EHelper (ropt_100) {
   switch (decinfo.isa.instr.funct7) {
     case 0x0000000: idex(pc, &ropt_100_table[0]); break;
-    default: assert(0);
+    default: idex(pc, &ropt_100_table[1]);
   }
 }
 static make_EHelper (ropt_110) {
   switch (decinfo.isa.instr.funct7) {
     case 0x0000000: idex(pc, &ropt_110_table[0]); break;
-    default: assert(0);
+    default: idex(pc, &ropt_110_table[1]);
   }
 }
 

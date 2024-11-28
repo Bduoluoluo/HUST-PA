@@ -6,6 +6,7 @@ make_EHelper (addi);
 make_EHelper (add);
 make_EHelper (sltu);
 make_EHelper (xor);
+make_EHelper (or);
 
 make_EHelper (jal);
 make_EHelper (jalr);

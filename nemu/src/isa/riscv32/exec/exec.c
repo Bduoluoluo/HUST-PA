@@ -29,6 +29,27 @@ static make_EHelper (iopt) {
   idex(pc, &iopt_table[decinfo.isa.instr.funct3]);
 }
 
+// opcode 0110011
+static OpcodeEntry add_sub_table [2] = {
+  EX(add), EMPTY
+};
+
+static make_EHelper (add_sub) {
+  switch (decinfo.isa.instr.funct7) {
+    case 0x0000000: idex(pc, &add_sub_table[0]); break;
+    default: assert(0);
+  }
+}
+
+static OpcodeEntry ropt_table [8] = {
+  EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY
+};
+
+static make_EHelper (ropt) {
+  decinfo.width = ropt_table[decinfo.isa.instr.funct3].width;
+  idex(pc, &ropt_table[decinfo.isa.instr.funct3]);
+}
+
 static OpcodeEntry opcode_table [32] = {
   /* b00 */ IDEX(ld, load), EMPTY, EMPTY, EMPTY, IDEX(I, iopt), IDEX(U, auipc), EMPTY, EMPTY,
   /* b01 */ IDEX(st, store), EMPTY, EMPTY, EMPTY, EMPTY, IDEX(U, lui), EMPTY, EMPTY,

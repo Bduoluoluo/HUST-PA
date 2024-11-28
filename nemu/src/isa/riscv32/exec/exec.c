@@ -61,28 +61,27 @@ static OpcodeEntry ropt_110_table [] = {
 };
 
 static make_EHelper (ropt_000) {
-  printf("0x%07x aaaaaaaaaaaaaaaa\n", decinfo.isa.instr.funct7);
   switch (decinfo.isa.instr.funct7) {
-    case 0x0000000: idex(pc, &ropt_000_table[0]); break;
-    case 0x0100000: idex(pc, &ropt_000_table[1]); break;
+    case 0b0000000: idex(pc, &ropt_000_table[0]); break;
+    case 0b0100000: idex(pc, &ropt_000_table[1]); break;
     default: idex(pc, &ropt_000_table[2]);
   }
 }
 static make_EHelper (ropt_011) {
   switch (decinfo.isa.instr.funct7) {
-    case 0x0000000: idex(pc, &ropt_011_table[0]); break;
+    case 0b0000000: idex(pc, &ropt_011_table[0]); break;
     default: idex(pc, &ropt_011_table[1]);
   }
 }
 static make_EHelper (ropt_100) {
   switch (decinfo.isa.instr.funct7) {
-    case 0x0000000: idex(pc, &ropt_100_table[0]); break;
+    case 0b0000000: idex(pc, &ropt_100_table[0]); break;
     default: idex(pc, &ropt_100_table[1]);
   }
 }
 static make_EHelper (ropt_110) {
   switch (decinfo.isa.instr.funct7) {
-    case 0x0000000: idex(pc, &ropt_110_table[0]); break;
+    case 0b0000000: idex(pc, &ropt_110_table[0]); break;
     default: idex(pc, &ropt_110_table[1]);
   }
 }

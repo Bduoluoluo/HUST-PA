@@ -3,7 +3,7 @@
 make_EHelper (jal) {
   rtl_li(&ir, decinfo.seq_pc);
   rtl_sr(id_dest->reg, &ir, 4);
-  rtl_addi(&s0, &id_src->val, cpu.pc);
+  rtl_addi(&s0, &id_src->val, decinfo.seq_pc);
   rtl_jr(&s0);
 
   print_asm_template2(jal);

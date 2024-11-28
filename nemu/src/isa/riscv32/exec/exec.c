@@ -30,19 +30,30 @@ static make_EHelper (iopt) {
 }
 
 // opcode 0110011
-static OpcodeEntry add_sub_table [2] = {
-  EX(add), EMPTY
+static OpcodeEntry ropt_000_table [] = {
+  EX(add)
 };
 
-static make_EHelper (add_sub) {
+static OpcodeEntry ropt_011_table [] = {
+  EX(sltu)
+};
+
+static make_EHelper (ropt_000) {
   switch (decinfo.isa.instr.funct7) {
-    case 0x0000000: idex(pc, &add_sub_table[0]); break;
+    case 0x0000000: idex(pc, &ropt_000_table[0]); break;
+    default: assert(0);
+  }
+}
+
+static make_EHelper (ropt_011) {
+  switch (decinfo.isa.instr.funct7) {
+    case 0x0000000: idex(pc, &ropt_011_table[0]); break;
     default: assert(0);
   }
 }
 
 static OpcodeEntry ropt_table [8] = {
-  EX(add_sub), EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY
+  EX(ropt_000), EMPTY, EMPTY, EX(ropt_011), EMPTY, EMPTY, EMPTY, EMPTY
 };
 
 static make_EHelper (ropt) {

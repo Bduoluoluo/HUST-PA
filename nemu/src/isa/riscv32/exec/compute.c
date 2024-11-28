@@ -20,6 +20,7 @@ make_EHelper (addi) {
 
   print_asm_template3(addi);
 }
+// --------------
 
 // opcode 0110011
 make_EHelper (add) {
@@ -28,3 +29,11 @@ make_EHelper (add) {
 
   print_asm_template3(add);
 }
+
+make_EHelper (sltu) {
+  rtl_setrelop(RELOP_LTU, &s0, &id_src->val, &id_src2->val);
+  rtl_sr(id_dest->reg, &s0, 4);
+  
+  print_asm_template3(sltu);
+}
+// --------------

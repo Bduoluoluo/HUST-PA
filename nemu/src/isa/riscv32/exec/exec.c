@@ -62,6 +62,7 @@ static OpcodeEntry ropt_110_table [] = {
 
 static make_EHelper (ropt_000) {
   switch (decinfo.isa.instr.funct7) {
+    printf("0x%07x\n aaaaaaaaaaaaaaaa", decinfo.isa.instr.funct7);
     case 0x0000000: idex(pc, &ropt_000_table[0]); break;
     case 0x0100000: idex(pc, &ropt_000_table[1]); break;
     default: idex(pc, &ropt_000_table[2]);

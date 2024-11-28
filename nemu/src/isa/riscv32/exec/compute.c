@@ -40,6 +40,14 @@ make_EHelper (add) {
 
   print_asm_template3(add);
 }
+
+// fun7 0100000
+make_EHelper (sub) {
+  rtl_sub(&s0, &id_src->val, &id_src2->val);
+  rtl_sr(id_dest->reg, &s0, 4);
+
+  print_asm_template3(sub);
+}
 // --------
 
 // fun3 011

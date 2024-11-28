@@ -42,11 +42,10 @@ static make_EHelper (add_sub) {
 }
 
 static OpcodeEntry ropt_table [8] = {
-  EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY
+  EX(add_sub), EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY
 };
 
 static make_EHelper (ropt) {
-  printf("aaaaaaaaaaaaaaaa\n");
   decinfo.width = ropt_table[decinfo.isa.instr.funct3].width;
   idex(pc, &ropt_table[decinfo.isa.instr.funct3]);
 }

@@ -34,7 +34,11 @@ make_DHelper (I) {
   decode_op_r(id_dest, decinfo.isa.instr.rd, false);
 }
 
-make_DHelper(U) {
+make_DHelper (B) {
+
+}
+
+make_DHelper (U) {
   decode_op_i(id_src, decinfo.isa.instr.imm31_12 << 12, true);
   decode_op_r(id_dest, decinfo.isa.instr.rd, false);
   
@@ -47,7 +51,7 @@ make_DHelper (J) {
   decode_op_r(id_dest, decinfo.isa.instr.rd, false);
 }
 
-make_DHelper(ld) {
+make_DHelper (ld) {
   decode_op_r(id_src, decinfo.isa.instr.rs1, true);
   decode_op_i(id_src2, decinfo.isa.instr.simm11_0, true);
 
@@ -58,7 +62,7 @@ make_DHelper(ld) {
   decode_op_r(id_dest, decinfo.isa.instr.rd, false);
 }
 
-make_DHelper(st) {
+make_DHelper (st) {
   decode_op_r(id_src, decinfo.isa.instr.rs1, true);
   int32_t simm = (decinfo.isa.instr.simm11_5 << 5) | decinfo.isa.instr.imm4_0;
   decode_op_i(id_src2, simm, true);

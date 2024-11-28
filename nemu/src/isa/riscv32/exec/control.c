@@ -22,7 +22,7 @@ make_EHelper (jalr) {
 // opcode 1100011
 // fun3 000
 make_EHelper (beq) {
-  rtl_addi(&s0, &id_dest->val, cpu.pc);
+  rtl_addi(&s0, &id_dest->val, decinfo.seq_pc);
   rtl_jrelop(RELOP_EQ, &id_src->val, &id_src2->val, s0);
 
   print_asm_template3(beq);
@@ -30,7 +30,7 @@ make_EHelper (beq) {
 
 // fun3 001
 make_EHelper (bne) {
-  rtl_addi(&s0, &id_dest->val, cpu.pc);
+  rtl_addi(&s0, &id_dest->val, decinfo.seq_pc);
   rtl_jrelop(RELOP_NE, &id_src->val, &id_src2->val, s0);
 
   print_asm_template3(bne);

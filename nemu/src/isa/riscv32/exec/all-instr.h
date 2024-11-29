@@ -5,6 +5,7 @@ make_EHelper(auipc);
 make_EHelper(addi);
 make_EHelper(sltiu);
 make_EHelper(srai);
+make_EHelper(andi);
 make_EHelper(add);
 make_EHelper(sub);
 make_EHelper(sltu);

@@ -1,6 +1,8 @@
 #include "cpu/exec.h"
 #include "all-instr.h"
 
+static OpcodeEntry empty_ = EMPTY;
+
 static OpcodeEntry load_table [8] = {
   EMPTY, EMPTY, EXW(ld, 4), EMPTY, EMPTY, EMPTY, EMPTY, EMPTY
 };
@@ -31,8 +33,19 @@ static make_EHelper (branch) {
 // --------------
 
 // opcode 0010011
+static OpcodeEntry iopt_101_table [] = {
+  EX(srai),   // 0000000
+};
+
+static make_EHelper (iopt_101) {
+  switch (decinfo.isa.instr.funct7) {
+    case 0b0100000: idex(pc, &iopt_101_table[0]); break;
+    default: idex(pc, &empty_);
+  }
+}
+
 static OpcodeEntry iopt_table [8] = {
-  EX(addi), EMPTY, EMPTY, EX(sltiu), EMPTY, EMPTY, EMPTY, EMPTY
+  EX(addi), EMPTY, EMPTY, EX(sltiu), EMPTY, IDEX(I_shamt, iopt_101), EMPTY, EMPTY
 };
 
 static make_EHelper (iopt) {
@@ -45,44 +58,40 @@ static make_EHelper (iopt) {
 static OpcodeEntry ropt_000_table [] = {
   EX(add),    // 0000000
   EX(sub),    // 0100000
-  EMPTY
 };
 static OpcodeEntry ropt_011_table [] = {
   EX(sltu),   // 0000000
-  EMPTY
 };
 static OpcodeEntry ropt_100_table [] = {
   EX(xor),    // 0000000
-  EMPTY
 };
 static OpcodeEntry ropt_110_table [] = {
   EX(or),     // 0000000
-  EMPTY
 };
 
 static make_EHelper (ropt_000) {
   switch (decinfo.isa.instr.funct7) {
     case 0b0000000: idex(pc, &ropt_000_table[0]); break;
     case 0b0100000: idex(pc, &ropt_000_table[1]); break;
-    default: idex(pc, &ropt_000_table[2]);
+    default: idex(pc, &empty_);
   }
 }
 static make_EHelper (ropt_011) {
   switch (decinfo.isa.instr.funct7) {
     case 0b0000000: idex(pc, &ropt_011_table[0]); break;
-    default: idex(pc, &ropt_011_table[1]);
+    default: idex(pc, &empty_);
   }
 }
 static make_EHelper (ropt_100) {
   switch (decinfo.isa.instr.funct7) {
     case 0b0000000: idex(pc, &ropt_100_table[0]); break;
-    default: idex(pc, &ropt_100_table[1]);
+    default: idex(pc, &empty_);
   }
 }
 static make_EHelper (ropt_110) {
   switch (decinfo.isa.instr.funct7) {
     case 0b0000000: idex(pc, &ropt_110_table[0]); break;
-    default: idex(pc, &ropt_110_table[1]);
+    default: idex(pc, &empty_);
   }
 }
 

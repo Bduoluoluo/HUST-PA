@@ -29,6 +29,14 @@ make_EHelper (sltiu) {
   
   print_asm_template3(sltiu);
 }
+
+// fun3 101
+// fun7 0100000
+make_EHelper (srai) {
+  rtl_sar(&s0, &id_src->val, &id_src2->val);
+  rtl_sr(id_dest->reg, &s0, 4);
+}
+// --------
 // --------------
 
 // opcode 0110011

@@ -1,5 +1,7 @@
 #include "cpu/exec.h"
 
+// opcode 0000011
+// fun3 100 101 010
 make_EHelper(ld) {
   rtl_lm(&s0, &id_src->addr, decinfo.width);
   rtl_sr(id_dest->reg, &s0, 4);
@@ -11,7 +13,10 @@ make_EHelper(ld) {
     default: assert(0);
   }
 }
+// --------------
 
+// opcode 0100011
+// fun3 010 001 000
 make_EHelper(st) {
   rtl_sm(&id_src->addr, &id_dest->val, decinfo.width);
 
@@ -22,3 +27,4 @@ make_EHelper(st) {
     default: assert(0);
   }
 }
+// --------------

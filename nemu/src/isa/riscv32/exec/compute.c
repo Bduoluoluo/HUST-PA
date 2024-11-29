@@ -35,6 +35,8 @@ make_EHelper (sltiu) {
 make_EHelper (srai) {
   rtl_sar(&s0, &id_src->val, &id_src2->val);
   rtl_sr(id_dest->reg, &s0, 4);
+
+  print_asm_template3(srai);
 }
 // --------
 // --------------

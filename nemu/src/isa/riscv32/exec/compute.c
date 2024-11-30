@@ -22,6 +22,16 @@ make_EHelper (addi) {
   print_asm_template3(addi);
 }
 
+// fun3 001
+// fun7 0000000
+make_EHelper (slli) {
+  rtl_shl(&s0, &id_src->val, &id_src2->val);
+  rtl_sr(id_dest->reg, &s0, 4);
+
+  print_asm_template3(slli);
+}
+// --------
+
 // fun3 011
 make_EHelper (sltiu) {
   rtl_setrelop(RELOP_LTU, &s0, &id_src->val, &id_src2->val);

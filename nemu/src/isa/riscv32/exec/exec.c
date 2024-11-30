@@ -33,10 +33,19 @@ static make_EHelper (branch) {
 // --------------
 
 // opcode 0010011
+static OpcodeEntry iopt_001_table [] = {
+  EX(slli),   // 0000000
+};
 static OpcodeEntry iopt_101_table [] = {
-  EX(srai),   // 0000000
+  EX(srai),   // 0100000
 };
 
+static make_EHelper (iopt_001) {
+  switch (decinfo.isa.instr.funct7) {
+    case 0b0000000: idex(pc, &iopt_001_table[0]); break;
+    default: idex(pc, &empty_);
+  }
+}
 static make_EHelper (iopt_101) {
   switch (decinfo.isa.instr.funct7) {
     case 0b0100000: idex(pc, &iopt_101_table[0]); break;
@@ -45,7 +54,7 @@ static make_EHelper (iopt_101) {
 }
 
 static OpcodeEntry iopt_table [8] = {
-  EX(addi), EMPTY, EMPTY, EX(sltiu), EX(xori), IDEX(I_shamt, iopt_101), EMPTY, EX(andi)
+  EX(addi), IDEX(I_shamt, iopt_001), EMPTY, EX(sltiu), EX(xori), IDEX(I_shamt, iopt_101), EMPTY, EX(andi)
 };
 
 static make_EHelper (iopt) {

@@ -138,7 +138,7 @@ static make_EHelper (ropt_111) {
 }
 
 static OpcodeEntry ropt_table [8] = {
-  EX(ropt_000), EX(ropt_001), EMPTY, EX(ropt_011), EX(ropt_100), EX(ropt_101), EX(ropt_110), EX(ropt_111)
+  EX(ropt_000), EX(ropt_001), EX(ropt_010), EX(ropt_011), EX(ropt_100), EX(ropt_101), EX(ropt_110), EX(ropt_111)
 };
 
 static make_EHelper (ropt) {

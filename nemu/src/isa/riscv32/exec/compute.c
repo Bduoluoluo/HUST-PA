@@ -49,6 +49,14 @@ make_EHelper (xori) {
 }
 
 // fun3 101
+// fun7 0000000
+make_EHelper (srli) {
+  rtl_shr(&s0, &id_src->val, &id_src2->val);
+  rtl_sr(id_dest->reg, &s0, 4);
+
+  print_asm_template3(srli);
+}
+
 // fun7 0100000
 make_EHelper (srai) {
   rtl_sar(&s0, &id_src->val, &id_src2->val);

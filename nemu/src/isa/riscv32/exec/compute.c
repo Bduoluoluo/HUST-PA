@@ -68,6 +68,17 @@ make_EHelper (sub) {
 }
 // --------
 
+// fun3 001
+// fun7 0000000
+make_EHelper (sll) {
+  rtl_andi(&s1, &id_src2->val, 0b11111);
+  rtl_shl(&s0, &id_src->val, &s1);
+  rtl_sr(id_dest->reg, &s0, 4);
+
+  print_asm_template3(sll);
+}
+// --------
+
 // fun3 011
 // fun7 0000000
 make_EHelper (sltu) {

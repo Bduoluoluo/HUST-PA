@@ -8,6 +8,7 @@ make_EHelper(srai);
 make_EHelper(andi);
 make_EHelper(add);
 make_EHelper(sub);
+make_EHelper(sll);
 make_EHelper(sltu);
 make_EHelper(xor);
 make_EHelper(srl);

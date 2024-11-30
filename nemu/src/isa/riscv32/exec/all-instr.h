@@ -20,6 +20,7 @@ make_EHelper(jal);
 make_EHelper(jalr);
 make_EHelper(beq);
 make_EHelper(bne);
+make_EHelper(bge);
 
 make_EHelper(ld);
 make_EHelper(st);

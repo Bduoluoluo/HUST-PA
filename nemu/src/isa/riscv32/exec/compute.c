@@ -144,6 +144,15 @@ make_EHelper (srl) {
 
   print_asm_template3(srl);
 }
+
+// fun7 0100000
+make_EHelper (sra) {
+  rtl_andi(&s1, &id_src2->val, 0b11111);
+  rtl_sar(&s0, &id_src->val, &s1);
+  rtl_sr(id_dest->reg, &s0, 4);
+
+  print_asm_template3(sra);
+}
 // --------
 
 // fun3 110

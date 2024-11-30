@@ -17,6 +17,7 @@ make_EHelper(slt);
 make_EHelper(sltu);
 make_EHelper(xor);
 make_EHelper(srl);
+make_EHelper(sra);
 make_EHelper(or);
 make_EHelper(and);
 

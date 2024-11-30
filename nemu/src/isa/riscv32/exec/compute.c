@@ -30,6 +30,14 @@ make_EHelper (sltiu) {
   print_asm_template3(sltiu);
 }
 
+// fun3 100
+make_EHelper (xori) {
+  rtl_xor(&s0, &id_src->val, &id_src2->val);
+  rtl_sr(id_dest->reg, &s0, 4);
+
+  print_asm_template3(xori);
+}
+
 // fun3 101
 // fun7 0100000
 make_EHelper (srai) {

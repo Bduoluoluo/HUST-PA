@@ -45,7 +45,7 @@ static make_EHelper (iopt_101) {
 }
 
 static OpcodeEntry iopt_table [8] = {
-  EX(addi), EMPTY, EMPTY, EX(sltiu), EMPTY, IDEX(I_shamt, iopt_101), EMPTY, EX(andi)
+  EX(addi), EMPTY, EMPTY, EX(sltiu), EX(xori), IDEX(I_shamt, iopt_101), EMPTY, EX(andi)
 };
 
 static make_EHelper (iopt) {

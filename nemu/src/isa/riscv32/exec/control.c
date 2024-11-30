@@ -51,4 +51,12 @@ make_EHelper (bge) {
 
   print_asm_template3(bge);
 }
+
+// fun3 110
+make_EHelper (bltu) {
+  rtl_addi(&s0, &id_dest->val, cpu.pc);
+  rtl_jrelop(RELOP_LTU, &id_src->val, &id_src2->val, s0);
+
+  print_asm_template3(bltu);
+}
 // --------------

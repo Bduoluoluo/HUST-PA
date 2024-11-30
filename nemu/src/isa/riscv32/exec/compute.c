@@ -87,6 +87,16 @@ make_EHelper (sll) {
 }
 // --------
 
+// fun3 010
+// fun7 0000000
+make_EHelper (slt) {
+  rtl_setrelop(RELOP_LT, &s0, &id_src->val, &id_src2->val);
+  rtl_sr(id_dest->reg, &s0, 4);
+  
+  print_asm_template3(slt);
+}
+// --------
+
 // fun3 011
 // fun7 0000000
 make_EHelper (sltu) {

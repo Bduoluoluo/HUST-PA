@@ -63,6 +63,9 @@ static OpcodeEntry ropt_000_table [] = {
 static OpcodeEntry ropt_001_table [] = {
   EX(sll),    // 0000000
 };
+static OpcodeEntry ropt_010_table [] = {
+  EX(slt),    // 0000000
+};
 static OpcodeEntry ropt_011_table [] = {
   EX(sltu),   // 0000000
 };
@@ -92,6 +95,12 @@ static make_EHelper (ropt_000) {
 static make_EHelper (ropt_001) {
   switch (decinfo.isa.instr.funct7) {
     case 0b0000000: idex(pc, &ropt_001_table[0]); break;
+    default: idex(pc, &empty_);
+  }
+}
+static make_EHelper (ropt_010) {
+  switch (decinfo.isa.instr.funct7) {
+    case 0b0000000: idex(pc, &ropt_010_table[0]); break;
     default: idex(pc, &empty_);
   }
 }

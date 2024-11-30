@@ -28,6 +28,7 @@ make_EHelper(bge);
 
 // ldst
 make_EHelper(ld);
+make_EHelper(lh);
 make_EHelper(st);
 
 // muldiv

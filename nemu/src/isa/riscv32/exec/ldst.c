@@ -13,6 +13,15 @@ make_EHelper(ld) {
     default: assert(0);
   }
 }
+
+// fun3 001
+make_EHelper (lh) {
+  rtl_lm(&s0, &id_src->addr, 2);
+  rtl_sext(&s1, &s0, 2);
+  rtl_sr(id_dest->reg, &s1, 4);
+
+  print_asm_template2(lh);
+}
 // --------------
 
 // opcode 0100011

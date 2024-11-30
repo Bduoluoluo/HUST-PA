@@ -35,6 +35,7 @@ make_EHelper(st);
 
 // muldiv
 make_EHelper(mul);
+make_EHelper(mulh);
 make_EHelper(div);
 make_EHelper(rem);
 

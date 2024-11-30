@@ -36,6 +36,14 @@ make_EHelper (bne) {
   print_asm_template3(bne);
 }
 
+// fun3 100
+make_EHelper (blt) {
+  rtl_addi(&s0, &id_dest->val, cpu.pc);
+  rtl_jrelop(RELOP_LT, &id_src->val, &id_src2->val, s0);
+
+  print_asm_template3(blt);
+}
+
 // fun3 101
 make_EHelper (bge) {
   rtl_addi(&s0, &id_dest->val, cpu.pc);

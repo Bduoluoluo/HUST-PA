@@ -23,7 +23,7 @@ static make_EHelper(store) {
 
 // opcode 1100011
 static OpcodeEntry branch_table [8] = {
-  EX(beq), EX(bne), EMPTY, EMPTY, EX(blt), EX(bge), EX(bltu), EMPTY
+  EX(beq), EX(bne), EMPTY, EMPTY, EX(blt), EX(bge), EX(bltu), EX(bgeu)
 };
 
 static make_EHelper (branch) {

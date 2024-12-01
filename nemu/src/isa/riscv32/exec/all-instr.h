@@ -29,6 +29,7 @@ make_EHelper(bne);
 make_EHelper(blt);
 make_EHelper(bge);
 make_EHelper(bltu);
+make_EHelper(bgeu);
 
 // ldst
 make_EHelper(ld);

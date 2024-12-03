@@ -1,6 +1,6 @@
 #include "nemu.h"
 #include "monitor/diff-test.h"
-#include "isa/diff-test.h"
+#include "../../isa/riscv32/include/isa/diff-test.h"
 
 void cpu_exec(uint64_t);
 

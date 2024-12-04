@@ -166,7 +166,7 @@ static OpcodeEntry opcode_table [32] = {
   /* b00 */ IDEX(ld, load), EMPTY, EMPTY, EMPTY, IDEX(I, iopt), IDEX(U, auipc), EMPTY, EMPTY,
   /* b01 */ IDEX(st, store), EMPTY, EMPTY, EMPTY, IDEX(R, ropt), IDEX(U, lui), EMPTY, EMPTY,
   /* b10 */ EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-  /* b11 */ IDEX(B, branch), IDEX(I, jalr), EX(nemu_trap), IDEX(J, jal), EX(ebreak), EMPTY, EMPTY, EMPTY,
+  /* b11 */ IDEX(B, branch), IDEX(I, jalr), EX(nemu_trap), IDEX(J, jal), EX(nemu_trap), EMPTY, EMPTY, EMPTY,
 };
 
 void isa_exec(vaddr_t *pc) {

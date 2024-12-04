@@ -1,12 +1,6 @@
 #include "cpu/exec.h"
 #include "monitor/monitor.h"
 
-make_EHelper (ebreak) {
-  rtl_exit(NEMU_STOP, cpu.pc, 0);
-
-  print_asm("ebreak");
-}
-
 make_EHelper(inv) {
   /* invalid opcode */
 

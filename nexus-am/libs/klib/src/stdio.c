@@ -20,7 +20,48 @@ size_t i2s (char *dst, int d, size_t n) {
 }
 
 int printf(const char *fmt, ...) {
-  return 0;
+  va_list args;
+  size_t m = 0;
+  const char *p = fmt;
+
+  va_start(args, fmt);
+
+  while (*p != '\0') {
+    if (*p == '%') {
+      p ++;
+      switch (*p) {
+        case 'd': {
+          int num = va_arg(args, int);
+          char s[65];
+          size_t len = i2s(s, num, -1);
+          m += len;
+          for (size_t i = 0; i < len; i ++) _putc(s[i]);
+          break;          
+        }
+        case 's': {
+          char *s = va_arg(args, char*);
+          size_t len = strlen(s);
+          m += len;
+          for (size_t i = 0; i < len; i ++) _putc(s[i]);
+          break;          
+        }
+        case '%': {
+          _putc('%');
+          m ++;
+          break;          
+        }
+        default: return -1;
+      }
+    } else {
+      _putc(*p);
+      m ++;
+    }
+    p ++;
+  }
+
+  va_end(args);
+
+  return m;
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {

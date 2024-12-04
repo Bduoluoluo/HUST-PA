@@ -3,7 +3,7 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
-size_t i2s (char *dst, int d, size_t n) {
+size_t i2s (char *dst, int d, size_t n, size_t width) {
   char str[65];
   size_t ret = 0, len = 0;
   int neg = 0;
@@ -11,8 +11,16 @@ size_t i2s (char *dst, int d, size_t n) {
   while (d) {
     str[len ++] = d % 10 + '0';
     d /= 10;
+    if (width) width --;
   }
-  if (neg) str[len ++] = '-';
+  if (neg) {
+    str[len ++] = '-';
+    if (width) width --;
+  }
+  while (width) {
+    str[len ++] = ' ';
+    width --;
+  }
   while (n && len) {
     *dst = str[-- len];
     dst ++;
@@ -36,17 +44,17 @@ int printf(const char *fmt, ...) {
         case 'd': {
           int num = va_arg(args, int);
           char s[65];
-          size_t len = i2s(s, num, -1);
+          size_t len = i2s(s, num, -1, 0);
           m += len;
           for (size_t i = 0; i < len; i ++) _putc(s[i]);
-          break;          
+          break;
         }
         case 's': {
           char *s = va_arg(args, char*);
           size_t len = strlen(s);
           m += len;
           for (size_t i = 0; i < len; i ++) _putc(s[i]);
-          break;          
+          break;
         }
         case 'c': {
           char c = va_arg(args, char);
@@ -57,7 +65,20 @@ int printf(const char *fmt, ...) {
         case '%': {
           _putc('%');
           m ++;
-          break;          
+          break;
+        }
+        case '0': {
+          p ++;
+          int width = *p - '0';
+          p ++;
+          if (*p != 'd') return -1;
+          if (width <= 0 || width > 9) return -1;
+          int num = va_arg(args, int);
+          char s[65];
+          size_t len = i2s(s, num, -1, width);
+          m += len;
+          for (size_t i = 0; i < len; i ++) _putc(s[i]);
+          break;
         }
         default: return -1;
       }
@@ -90,15 +111,15 @@ int sprintf(char *out, const char *fmt, ...) {
       switch (*p) {
         case 'd': {
           int num = va_arg(args, int);
-          m += i2s(out + m, num, -1);
-          break;          
+          m += i2s(out + m, num, -1, 0);
+          break;
         }
         case 's': {
           char *s = va_arg(args, char*);
           size_t len = strlen(s);
           strcpy(out + m, s);
           m += len;
-          break;          
+          break;
         }
         case 'c': {
           char c = va_arg(args, char);
@@ -107,7 +128,17 @@ int sprintf(char *out, const char *fmt, ...) {
         }
         case '%': {
           out[m ++] = '%';
-          break;          
+          break;
+        }
+        case '0': {
+          p ++;
+          int width = *p - '0';
+          p ++;
+          if (*p != 'd') return -1;
+          if (width <= 0 || width > 9) return -1;
+          int num = va_arg(args, int);
+          m += i2s(out + m, num, -1, width);
+          break;
         }
         default: return -1;
       }

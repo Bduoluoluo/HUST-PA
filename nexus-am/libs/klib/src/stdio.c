@@ -7,7 +7,7 @@ size_t i2s (char *dst, int d, size_t n) {
   char str[65];
   size_t ret = 0, len = 0;
   int neg = 0;
-  if (d < 0) neg = 1;
+  if (d < 0) neg = 1, d = -d;
   while (d) {
     str[len ++] = d % 10 + '0';
     d /= 10;

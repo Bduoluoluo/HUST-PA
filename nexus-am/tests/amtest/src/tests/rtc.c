@@ -6,7 +6,7 @@ void rtc_test() {
   int sec = 1;
   while (1) {
     int a = (int)uptime();
-    printf("%d\n", a);
+    printf("%s\n", a);
     // while(uptime() < 1000 * sec) ;
     // get_timeofday(&rtc);
     // printf("%d-%d-%d %02d:%02d:%02d GMT (", rtc.year, rtc.month, rtc.day, rtc.hour, rtc.minute, rtc.second);

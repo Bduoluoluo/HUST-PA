@@ -26,4 +26,5 @@ size_t __am_timer_read(uintptr_t reg, void *buf, size_t size) {
 }
 
 void __am_timer_init() {
+  printf("aaaaaaaaaaa");
 }

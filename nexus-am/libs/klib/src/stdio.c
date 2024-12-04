@@ -8,7 +8,10 @@ size_t i2s (char *dst, int d, size_t n, size_t width) {
   size_t ret = 0, len = 0;
   int neg = 0;
   if (d < 0) neg = 1, d = -d;
-  else if (d == 0) str[len ++] = '0';
+  else if (d == 0) {
+    str[len ++] = '0';
+    if (width) width --;
+  }
   while (d) {
     str[len ++] = d % 10 + '0';
     d /= 10;

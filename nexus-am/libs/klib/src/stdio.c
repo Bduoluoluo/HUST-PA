@@ -45,6 +45,12 @@ int printf(const char *fmt, ...) {
           for (size_t i = 0; i < len; i ++) _putc(s[i]);
           break;          
         }
+        case 'c': {
+          char c = va_arg(args, char);
+          _putc(c);
+          m ++;
+          break;
+        }
         case '%': {
           _putc('%');
           m ++;
@@ -90,6 +96,11 @@ int sprintf(char *out, const char *fmt, ...) {
           strcpy(out + m, s);
           m += len;
           break;          
+        }
+        case 'c': {
+          char c = va_arg(args, char);
+          out[m ++] = c;
+          break;
         }
         case '%': {
           out[m ++] = '%';

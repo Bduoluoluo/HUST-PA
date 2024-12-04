@@ -5,7 +5,8 @@ void rtc_test() {
   _DEV_TIMER_DATE_t rtc;
   int sec = 1;
   while (1) {
-    printf("%d\n", 1);
+    int a = uptime();
+    printf("%d\n", a);
     // while(uptime() < 1000 * sec) ;
     // get_timeofday(&rtc);
     // printf("%d-%d-%d %02d:%02d:%02d GMT (", rtc.year, rtc.month, rtc.day, rtc.hour, rtc.minute, rtc.second);

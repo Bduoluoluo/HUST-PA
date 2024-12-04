@@ -19,7 +19,7 @@ size_t i2s (char *dst, int d, size_t n, size_t width) {
     if (width) width --;
   }
   while (width) {
-    str[len ++] = ' ';
+    str[len ++] = '0';
     width --;
   }
   while (n && len) {

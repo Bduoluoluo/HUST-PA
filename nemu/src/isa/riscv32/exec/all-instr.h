@@ -43,5 +43,6 @@ make_EHelper(div);
 make_EHelper(rem);
 
 // special
+make_EHelper(ebreak);
 make_EHelper(inv);
 make_EHelper(nemu_trap);

@@ -151,7 +151,7 @@ static make_EHelper (ropt_110) {
 static make_EHelper (ropt_111) {
   switch (decinfo.isa.instr.funct7) {
     case 0b0000000: idex(pc, &ropt_111_table[0]); break;
-    case 0b0000001: idex(pc, &ropt_111_table[0]); break;
+    case 0b0000001: idex(pc, &ropt_111_table[1]); break;
     default: idex(pc, &empty_);
   }
 }

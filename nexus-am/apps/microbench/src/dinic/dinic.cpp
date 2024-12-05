@@ -131,6 +131,7 @@ void bench_dinic_run() {
 }
 
 int bench_dinic_validate() {
+  printf("\n\n%d %d\n\n", ans, setting->checksum);
   return (uint32_t)ans == setting->checksum;
 }
 }

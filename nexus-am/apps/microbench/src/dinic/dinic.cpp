@@ -128,6 +128,7 @@ void bench_dinic_prepare() {
 
 void bench_dinic_run() {
   ans = G->Maxflow(2 * N, 2 * N + 1);
+  printf("\n\n%d\n\n", ans);
 }
 
 int bench_dinic_validate() {

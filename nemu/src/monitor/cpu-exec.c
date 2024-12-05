@@ -66,6 +66,8 @@ void cpu_exec(uint64_t n) {
         nemu_state.state = NEMU_STOP;
     }
 
+  if (cpu.pc == 0x80101460) printf("aaaaaaaaaaaaaaaaaaa\n\n\n");
+
 #endif
 
   g_nr_guest_instr ++;

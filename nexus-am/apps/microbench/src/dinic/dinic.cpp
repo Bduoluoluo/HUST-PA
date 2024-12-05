@@ -127,7 +127,7 @@ void bench_dinic_prepare() {
     printf("\n%d", x % 1000);
   }
 
-  printf("\n%d\n", (uint32_t)10 % (uint32_t)6);
+  printf("\n%d\n", (uint32_t)5097 % (uint32_t)1000);
 }
 
 void bench_dinic_run() {

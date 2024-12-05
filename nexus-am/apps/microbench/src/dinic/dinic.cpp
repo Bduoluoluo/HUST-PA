@@ -124,7 +124,8 @@ void bench_dinic_prepare() {
     uint32_t x;
     G->AddEdge(s, i, (x = bench_rand()) % 1000);
     G->AddEdge(N + i, t, bench_rand() % 1000);
-    printf("\n%d", x % 1000);
+    x %= 1000;
+    printf("\n%d", x);
   }
 
   printf("\n%d\n", (uint32_t)5097 % (uint32_t)1000);

@@ -117,14 +117,14 @@ void bench_dinic_prepare() {
   G->init(2 * N + 2);
   for (int i = 0; i < N; i ++)
     for (int j = 0; j < N; j ++) {
-      int x;
-      G->AddEdge(i, N + j, (x = bench_rand()) % 10);
-      printf("\n%d", x);
+      G->AddEdge(i, N + j, bench_rand() % 10);
     }
 
   for (int i = 0; i < N; i ++) {
-    G->AddEdge(s, i, bench_rand() % 1000);
+    int x;
+    G->AddEdge(s, i, (x = bench_rand()) % 1000);
     G->AddEdge(N + i, t, bench_rand() % 1000);
+    printf("\n%d", x);
   }
 }
 

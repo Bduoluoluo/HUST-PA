@@ -87,6 +87,7 @@ struct Dinic {
         if (a == 0) break;
       }
     }
+    printf("\n%d", flow);
     return flow;
   }
 
@@ -97,7 +98,6 @@ struct Dinic {
       for (int i = 0; i < n; i++)
         cur[i] = head[i];
       flow += DFS(s, INF);
-      printf("\n%d\n", flow);
     }
     return flow;
   }

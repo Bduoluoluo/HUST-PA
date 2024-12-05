@@ -66,6 +66,14 @@ make_EHelper (srai) {
 }
 // --------
 
+// fun3 110
+make_EHelper (ori) {
+  rtl_or(&s0, &id_src->val, &id_src2->val);
+  rtl_sr(id_dest->reg, &s0, 4);
+
+  print_asm_template3(ori);
+}
+
 // fun3 111
 make_EHelper (andi) {
   rtl_and(&s0, &id_src->val, &id_src2->val);

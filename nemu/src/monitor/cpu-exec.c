@@ -65,8 +65,8 @@ void cpu_exec(uint64_t n) {
       if (nemu_state.state == NEMU_RUNNING)
         nemu_state.state = NEMU_STOP;
     }
-
-  if (cpu.pc == 0x80101460) printf("aaaaaaaaaaaaaaaaaaa\n\n\n");
+  bool suc = false;
+  if (cpu.pc == 0x80101474) printf("\n\n\n%d\n\n\n", isa_reg_str2val("a0", &suc));
 
 #endif
 

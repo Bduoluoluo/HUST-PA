@@ -118,16 +118,13 @@ void bench_dinic_prepare() {
   for (int i = 0; i < N; i ++)
     for (int j = 0; j < N; j ++) {
       int x;
-      G->AddEdge(i, N + j, x = bench_rand() % 10);
+      G->AddEdge(i, N + j, (x = bench_rand()) % 10);
       printf("\n%d", x);
     }
 
   for (int i = 0; i < N; i ++) {
-    int x;
-    G->AddEdge(s, i, x = bench_rand() % 1000);
-    printf("\n%d", x);
-    G->AddEdge(N + i, t, x = bench_rand() % 1000);
-    printf("\n%d", x);
+    G->AddEdge(s, i, bench_rand() % 1000);
+    G->AddEdge(N + i, t, bench_rand() % 1000);
   }
 }
 
@@ -136,7 +133,6 @@ void bench_dinic_run() {
 }
 
 int bench_dinic_validate() {
-  printf("\n\n%d %d\n\n", ans, setting->checksum);
   return (uint32_t)ans == setting->checksum;
 }
 }

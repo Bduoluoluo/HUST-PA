@@ -121,10 +121,10 @@ void bench_dinic_prepare() {
     }
 
   for (int i = 0; i < N; i ++) {
-    int x;
+    uint32_t x;
     G->AddEdge(s, i, (x = bench_rand()) % 1000);
     G->AddEdge(N + i, t, bench_rand() % 1000);
-    printf("\n%d", x);
+    printf("\n%d", x % 1000);
   }
 }
 

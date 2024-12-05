@@ -126,6 +126,8 @@ void bench_dinic_prepare() {
     G->AddEdge(N + i, t, bench_rand() % 1000);
     printf("\n%d", x % 1000);
   }
+
+  printf("\n%d\n", (int)10 % (int)6);
 }
 
 void bench_dinic_run() {

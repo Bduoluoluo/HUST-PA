@@ -54,8 +54,8 @@ make_EHelper (rem) {
 // fun3 111
 // fun7 0000001
 make_EHelper (remu) {
-  rtl_div_r(&s1, &id_src->val, &id_src2->val);
-  rtl_sr(id_dest->reg, &s1, 4);
+  rtl_idiv_r(&s0, &id_src->val, &id_src2->val);
+  rtl_sr(id_dest->reg, &s0, 4);
 
   print_asm_template3(remu);
 }

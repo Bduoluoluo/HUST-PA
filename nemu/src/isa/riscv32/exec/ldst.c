@@ -14,6 +14,15 @@ make_EHelper(ld) {
   }
 }
 
+// fun3 000
+make_EHelper (lb) {
+  rtl_lm(&s0, &id_src->addr, 1);
+  rtl_sext(&s1, &s0, 1);
+  rtl_sr(id_dest->reg, &s1, 4);
+
+  print_asm_template2(lb);
+}
+
 // fun3 001
 make_EHelper (lh) {
   rtl_lm(&s0, &id_src->addr, 2);

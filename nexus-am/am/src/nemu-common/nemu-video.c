@@ -26,7 +26,7 @@ size_t __am_video_write(uintptr_t reg, void *buf, size_t size) {
         int p = 0;
         for (int i = ctl->h - 1; i >= 0; i --)
           for (int j = ctl->w - 1; j >= 0; j --) {
-            outl(FB_ADDR + (ctl->y + i) * 1600 + (ctl->x + j) * 4, 0x000000ff);
+            outl(FB_ADDR + (ctl->y + i) * 1600 + (ctl->x + j) * 4, 0x0000ff00);
             // ctl->pixels[p]
             p += 4;
           }

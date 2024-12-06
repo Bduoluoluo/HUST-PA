@@ -23,9 +23,12 @@ size_t __am_video_write(uintptr_t reg, void *buf, size_t size) {
       if (ctl->sync) {
         outl(SYNC_ADDR, 0);
       } else {
-        for (int i = 0; i < ctl->w; i ++)
-          for (int j = 0; j < ctl->h; j ++)
-            outl(FB_ADDR + (ctl->x + i) * screen_height() * 4 + (ctl->y + j) * 4, ctl->pixels[i * ctl->h + j]);
+        int p = 0;
+        for (int i = 0; i < ctl->h; i ++)
+          for (int j = 0; j < ctl->w; j ++) {
+            outl(FB_ADDR + (ctl->y + i) * screen_width() * 4 + (ctl->x + j) * 4, ctl->pixels[p]);
+            p += 4;
+          }
       }
       return size;
     }

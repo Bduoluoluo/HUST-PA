@@ -24,12 +24,16 @@ size_t __am_video_write(uintptr_t reg, void *buf, size_t size) {
         outl(SYNC_ADDR, 0);
       } else {
         int p = 0;
-        for (int i = 0; i < ctl->w; i ++)
-          for (int j = 0; j < ctl->h; j ++) {
-            outl(FB_ADDR + (ctl->x + i) * 1600 + (ctl->y + j) * 4, 0x00ff0000);
+        for (int i = 0; i < ctl->h; i ++) {
+          int st = (ctl->y + i) * 1600 + ctl->x * 4;
+          for (int j = 0; j < ctl->w; j ++) {
+            outl(FB_ADDR + st, 0x00ff0000);
             // ctl->pixels[p]
+            st += 4;
             p += 4;
-          }
+          }          
+        }
+
       }
       return size;
     }

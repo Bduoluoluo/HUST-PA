@@ -22,8 +22,8 @@ void redraw() {
   assert((uint32_t)block_size <= LENGTH(color_buf));
 
   int x, y, k;
-  for (y = 0; y < N; y ++) {
-    for (x = 0; x < N; x ++) {
+  for (y = 0; y < 1; y ++) {
+    for (x = 0; x < 1; x ++) {
       for (k = 0; k < block_size; k ++) {
         color_buf[k] = canvas[y][x];
       }

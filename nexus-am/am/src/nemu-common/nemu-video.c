@@ -24,9 +24,9 @@ size_t __am_video_write(uintptr_t reg, void *buf, size_t size) {
         outl(SYNC_ADDR, 0);
       } else {
         int p = 0;
-        for (int i = 0; i < ctl->h; i ++)
-          for (int j = 0; j < ctl->w; j ++) {
-            outl(FB_ADDR + (ctl->x + i) * screen_height() * 4 + (ctl->y + j) * 4, ctl->pixels[p]);
+        for (int i = ctl->h - 1; i >= 0; i --)
+          for (int j = ctl->w - 1; j >= 0; j --) {
+            outl(FB_ADDR + (ctl->y + i) * screen_width() * 4 + (ctl->x + j) * 4, ctl->pixels[p]);
             p += 4;
           }
       }
@@ -37,4 +37,5 @@ size_t __am_video_write(uintptr_t reg, void *buf, size_t size) {
 }
 
 void __am_vga_init() {
+
 }

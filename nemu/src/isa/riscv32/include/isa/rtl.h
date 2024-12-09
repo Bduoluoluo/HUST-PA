@@ -3,6 +3,8 @@
 
 #include "rtl/rtl.h"
 
+void raise_intr(uint32_t NO, vaddr_t epc);
+
 static inline void rtl_lr(rtlreg_t* dest, int r, int width) {
   if (r != 0) { rtl_mv(dest, &reg_l(r)); }
   else { rtl_li(dest, 0); }

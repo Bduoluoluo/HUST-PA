@@ -22,8 +22,19 @@ static make_EHelper(store) {
 }
 
 // opcode 1110011
+static OpcodeEntry irq_table [] = {
+  EX(ecall),  // 000000000000
+};
+
+static make_EHelper (irq) {
+  switch (decinfo.isa.instr.csr) {
+    case 0b000000000000: idex(pc, &irq_table[0]); break;
+    default: idex(pc, &empty_);
+  }
+}
+
 static OpcodeEntry irq_csr_table [8] = {
-  EMPTY, IDEX(I_csr, csrrw), IDEX(I_csr, csrrs), EMPTY, EMPTY, EMPTY, EMPTY, EMPTY
+  EX(irq), IDEX(I_csr, csrrw), IDEX(I_csr, csrrs), EMPTY, EMPTY, EMPTY, EMPTY, EMPTY
 };
 
 static make_EHelper (irq_csr) {

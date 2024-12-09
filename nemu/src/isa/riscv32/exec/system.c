@@ -1,5 +1,13 @@
 #include "cpu/exec.h"
 
+// fun3 000
+make_EHelper (ecall) {
+    raise_intr(5, cpu.pc);
+
+    print_asm("ecall");
+}
+// --------
+
 // fun3 001
 make_EHelper (csrrw) {
     rtl_csr_sr(id_src2->reg, &id_src->val, 4);

@@ -23,7 +23,7 @@ static make_EHelper(store) {
 
 // opcode 1110011
 static OpcodeEntry irq_csr_table [8] = {
-  EMPTY, EMPTY, EX(csrrs), EMPTY, EMPTY, EMPTY, EMPTY, EMPTY
+  EMPTY, EX(csrrw), EX(csrrs), EMPTY, EMPTY, EMPTY, EMPTY, EMPTY
 };
 
 static make_EHelper (irq_csr) {

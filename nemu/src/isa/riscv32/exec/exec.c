@@ -27,7 +27,7 @@ static OpcodeEntry irq_csr_table [8] = {
 };
 
 static make_EHelper (irq_csr) {
-  printf("aaaaaaaaaaaaaaaaaaaaaaa\n");
+  printf("aaaaaaaaaaaaaaaaaaaaaaa %d\n", decinfo.isa.instr.funct3);
   decinfo.width = irq_csr_table[decinfo.isa.instr.funct3].width;
   idex(pc, &irq_csr_table[decinfo.isa.instr.funct3]);
 }

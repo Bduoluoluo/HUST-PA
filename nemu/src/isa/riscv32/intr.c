@@ -5,8 +5,6 @@ void raise_intr(uint32_t NO, vaddr_t epc) {
    * That is, use ``NO'' to index the IDT.
    */
 
-  printf("aaaaaaaaaaaaaaaaaaaaa %x\n", stvec);
-
   rtl_li(&sepc, epc);
   rtl_li(&scause, NO);
   rtl_jr(&stvec);

@@ -24,11 +24,13 @@ static make_EHelper(store) {
 // opcode 1110011
 static OpcodeEntry irq_table [] = {
   EX(ecall),  // 000000000000
+  EX(sret),   // 000100000010
 };
 
 static make_EHelper (irq) {
   switch (decinfo.isa.instr.csr) {
     case 0b000000000000: idex(pc, &irq_table[0]); break;
+    case 0b000100000010: idex(pc, &irq_table[1]); break;
     default: idex(pc, &empty_);
   }
 }

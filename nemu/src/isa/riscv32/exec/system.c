@@ -6,6 +6,12 @@ make_EHelper (ecall) {
 
     print_asm("ecall");
 }
+
+make_EHelper (sret) {
+    rtl_j(sepc + 4);
+
+    print_asm("sret");
+}
 // --------
 
 // fun3 001

@@ -13,7 +13,7 @@ const char *csr_name[] = {
 
 void isa_reg_display () {
   for (int i = 0; i < 32; i ++)
-    printf("%s  ->  0x%08x  %u\n", reg_name(i, 0), reg_l(i), reg_l(i));
+    printf("%s  ->  0x%08x  %d\n", reg_name(i, 0), reg_l(i), reg_l(i));
 }
 
 uint32_t isa_reg_str2val(const char *s, bool *success) {

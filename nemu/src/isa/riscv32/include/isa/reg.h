@@ -24,7 +24,6 @@ static rtlreg_t scause;
 static rtlreg_t sstatus;
 
 static inline rtlreg_t* get_csr (uint32_t csr) {
-  printf("aaaaaaaaaaaaaaa %x\n", csr);
   switch (csr) {
     case 0b000100000101: return &stvec;
     case 0b000101000001: return &sepc;

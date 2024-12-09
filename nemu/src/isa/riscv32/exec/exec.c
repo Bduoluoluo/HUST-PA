@@ -21,6 +21,17 @@ static make_EHelper(store) {
   idex(pc, &store_table[decinfo.isa.instr.funct3]);
 }
 
+// opcode 1110011
+static OpcodeEntry irq_csr_table [8] = {
+  EMPTY, EMPTY, EX(csrrs), EMPTY, EMPTY, EMPTY, EMPTY, EMPTY
+};
+
+static make_EHelper (irq_csr) {
+  decinfo.width = irq_csr_table[decinfo.isa.instr.funct3].width;
+  idex(pc, &irq_csr_table[decinfo.isa.instr.funct3]);
+}
+// --------------
+
 // opcode 1100011
 static OpcodeEntry branch_table [8] = {
   EX(beq), EX(bne), EMPTY, EMPTY, EX(blt), EX(bge), EX(bltu), EX(bgeu)
@@ -170,7 +181,7 @@ static OpcodeEntry opcode_table [32] = {
   /* b00 */ IDEX(ld, load), EMPTY, EMPTY, EMPTY, IDEX(I, iopt), IDEX(U, auipc), EMPTY, EMPTY,
   /* b01 */ IDEX(st, store), EMPTY, EMPTY, EMPTY, IDEX(R, ropt), IDEX(U, lui), EMPTY, EMPTY,
   /* b10 */ EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
-  /* b11 */ IDEX(B, branch), IDEX(I, jalr), EX(nemu_trap), IDEX(J, jal), EMPTY, EMPTY, EMPTY, EMPTY,
+  /* b11 */ IDEX(B, branch), IDEX(I, jalr), EX(nemu_trap), IDEX(J, jal), IDEX(I_csr, irq_csr), EMPTY, EMPTY, EMPTY,
 };
 
 void isa_exec(vaddr_t *pc) {

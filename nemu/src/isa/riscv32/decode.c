@@ -22,6 +22,16 @@ static inline make_DopHelper(r) {
   print_Dop(op->str, OP_STR_SIZE, "%s", reg_name(op->reg, 4));
 }
 
+static inline make_DopHelper(csr) {
+  op->type = OP_TYPE_REG;
+  op->reg = val;
+  if (load_val) {
+    rtl_csr_lr(&op->val, op->reg, 4);
+  }
+
+  print_Dop(op->str, OP_STR_SIZE, "%s", get_csr_name(op->reg));
+}
+
 make_DHelper (R) {
   decode_op_r(id_src, decinfo.isa.instr.rs1, true);
   decode_op_r(id_src2, decinfo.isa.instr.rs2, true);
@@ -31,6 +41,12 @@ make_DHelper (R) {
 make_DHelper (I) {
   decode_op_r(id_src, decinfo.isa.instr.rs1, true);
   decode_op_i(id_src2, decinfo.isa.instr.simm11_0, true);
+  decode_op_r(id_dest, decinfo.isa.instr.rd, false);
+}
+
+make_DHelper (I_csr) {
+  decode_op_r(id_src, decinfo.isa.instr.rs1, true);
+  decode_op_csr(id_src2, decinfo.isa.instr.csr, true);
   decode_op_r(id_dest, decinfo.isa.instr.rd, false);
 }
 

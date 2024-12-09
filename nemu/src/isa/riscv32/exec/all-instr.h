@@ -49,3 +49,6 @@ make_EHelper(remu);
 // special
 make_EHelper(inv);
 make_EHelper(nemu_trap);
+
+// system
+make_EHelper(csrrs);

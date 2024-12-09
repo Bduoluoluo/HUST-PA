@@ -4,6 +4,8 @@
 make_EHelper (csrrw) {
     rtl_csr_sr(id_src2->reg, &id_src->val, 4);
     rtl_sr(id_dest->reg, &id_src2->val, 4);
+
+    print_asm_template3(csrrw);
 }
 
 // fun3 010

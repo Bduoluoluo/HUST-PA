@@ -5,10 +5,6 @@
 static _Context* (*user_handler)(_Event, _Context*) = NULL;
 
 _Context* __am_irq_handle(_Context *c) {
-  printf("%d %d %d\n", c->epc, c->cause, c->status);
-  for (int i = 0; i < 32; i ++) printf("%d\n", c->gpr[i]);
-  printf("\n");
-
   _Context *next = c;
   if (user_handler) {
     _Event ev = {0};

@@ -14,7 +14,7 @@ typedef struct {
 
 } CPU_state;
 
-const char *csr_name[] = {
+static const char *csr_name[] = {
   "stvec", "sepc", "scause", "sstatus"
 };
 

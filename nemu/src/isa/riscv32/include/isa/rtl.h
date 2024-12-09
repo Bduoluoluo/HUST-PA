@@ -15,6 +15,7 @@ static inline void rtl_sr(int r, const rtlreg_t *src1, int width) {
 }
 
 static inline void rtl_csr_lr (rtlreg_t* dest, int r, int width) {
+  printf("aaaaaaaaa %x\n", r);
   rtl_mv(dest, get_csr(r));
 }
 

@@ -10,7 +10,7 @@ make_EHelper (ecall) {
 
 // fun3 001
 make_EHelper (csrrw) {
-    printf("aaaaaaaaaaaaaaaaaaa %x\n", id_src->val);
+    printf("aaaaaaaaaaaaaaaaaaa %x\n", id_src2->reg);
 
     rtl_csr_sr(id_src2->reg, &id_src->val, 4);
     rtl_sr(id_dest->reg, &id_src2->val, 4);

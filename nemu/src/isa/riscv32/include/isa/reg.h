@@ -14,14 +14,7 @@ typedef struct {
 
 } CPU_state;
 
-static const char *csr_name[] = {
-  "stvec", "sepc", "scause", "sstatus"
-};
-
-static rtlreg_t stvec;
-static rtlreg_t sepc;
-static rtlreg_t scause;
-static rtlreg_t sstatus;
+extern rtlreg_t stvec, sepc, scause, sstatus;
 
 static inline rtlreg_t* get_csr (uint32_t csr) {
   switch (csr) {
@@ -34,6 +27,7 @@ static inline rtlreg_t* get_csr (uint32_t csr) {
 }
 
 static inline const char* get_csr_name (uint32_t csr) {
+  extern const char* csr_name[];
   switch (csr) {
     case 0b000100000101: return csr_name[0];
     case 0b000101000001: return csr_name[1];

@@ -7,6 +7,10 @@ const char *regsl[] = {
   "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
 };
 
+const char *csr_name[] = {
+  "stvec", "sepc", "scause", "sstatus"
+};
+
 void isa_reg_display () {
   for (int i = 0; i < 32; i ++)
     printf("%s  ->  0x%08x  %u\n", reg_name(i, 0), reg_l(i), reg_l(i));

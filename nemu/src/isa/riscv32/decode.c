@@ -45,6 +45,7 @@ make_DHelper (I) {
 }
 
 make_DHelper (I_csr) {
+  printf("%x\n", cpu.pc);
   decode_op_r(id_src, decinfo.isa.instr.rs1, true);
   decode_op_csr(id_src2, decinfo.isa.instr.csr, true);
   decode_op_r(id_dest, decinfo.isa.instr.rd, false);

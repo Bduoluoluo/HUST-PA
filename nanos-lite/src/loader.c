@@ -1,4 +1,5 @@
 #include "proc.h"
+#include "riscv32.h"
 #include <elf.h>
 
 #ifdef __ISA_AM_NATIVE__
@@ -9,7 +10,7 @@
 # define Elf_Phdr Elf32_Phdr
 #endif
 
-uint8_t tmp[];
+uint8_t tmp[32768];
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
   Elf_Ehdr elf_header;
@@ -19,14 +20,20 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   Elf32_Off phoff = elf_header.e_phoff;
   for (Elf32_Half i = 0; i < elf_header.e_phnum; i ++) {
     ramdisk_read(&prog_header, phoff, sizeof(Elf_Phdr));
-    uintptr_t segoff = prog_header.p_offset;
+    if (prog_header.p_type != PT_LOAD) continue;
 
+    uintptr_t segoff = prog_header.p_offset;
+    Elf32_Word j = 0;
+    ramdisk_read(tmp, segoff, prog_header.p_filesz);
+    for (; j < prog_header.p_filesz; j ++)
+      outb(prog_header.p_vaddr + j, tmp[j]);
+    for (; j < prog_header.p_memsz; j ++)
+      outb(prog_header.p_vaddr + j, 0);
 
     phoff += sizeof(Elf_Phdr);
   }
 
-  // return elf_header.e_entry;
-  return 0;
+  return elf_header.e_entry;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {

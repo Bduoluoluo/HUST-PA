@@ -8,6 +8,7 @@ make_EHelper (ecall) {
 }
 
 make_EHelper (sret) {
+    printf("bbbbbbbbbbbbbb %x\n", sepc);
     rtl_j(sepc + 4);
 
     print_asm("sret");

@@ -8,7 +8,7 @@ make_EHelper (ecall) {
 }
 
 make_EHelper (sret) {
-    rtl_j(sepc);
+    rtl_j(sepc + 4);
 
     print_asm("sret");
 }

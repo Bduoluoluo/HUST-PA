@@ -1,5 +1,4 @@
 #include "proc.h"
-#include "riscv32.h"
 #include <elf.h>
 
 #ifdef __ISA_AM_NATIVE__
@@ -25,10 +24,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     uintptr_t segoff = prog_header.p_offset;
     Elf32_Word j = 0;
     ramdisk_read(tmp, segoff, prog_header.p_filesz);
-    for (; j < prog_header.p_filesz; j ++)
-      outb(prog_header.p_vaddr + j, tmp[j]);
-    for (; j < prog_header.p_memsz; j ++)
-      outb(prog_header.p_vaddr + j, 0);
+    memcpy(prog_header.p_vaddr, tmp, prog_header.p_filesz);
+    memset(prog_header.p_vaddr + prog_header.p_filesz, 0, prog_header.p_memsz - prog_header.p_filesz);
 
     phoff += sizeof(Elf_Phdr);
   }

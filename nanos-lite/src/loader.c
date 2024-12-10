@@ -32,6 +32,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     for (; j < prog_header.p_memsz; j ++)
       outb(prog_header.p_vaddr + j, 0);
 
+    printf("%x\n", inl(0x83000234));
+
     phoff += sizeof(Elf_Phdr);
   }
 

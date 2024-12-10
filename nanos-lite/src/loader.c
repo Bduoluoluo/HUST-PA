@@ -22,7 +22,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     ramdisk_read(&prog_header, phoff, sizeof(Elf_Phdr));
     if (prog_header.p_type != PT_LOAD) continue;
 
-    printf("aaaaaaaaaaaa %d %d\n", elf_header.e_phentsize, sizeof(Elf_Phdr));
+    printf("aaaaaaaaaaaa %d\n", prog_header.p_vaddr);
 
     uintptr_t segoff = prog_header.p_offset;
     Elf32_Word j = 0;

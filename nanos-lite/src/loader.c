@@ -35,7 +35,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     phoff += sizeof(Elf_Phdr);
   }
 
-  return 0x83000000;
+  return elf_header.e_entry;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {

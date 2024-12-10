@@ -10,7 +10,9 @@
 #endif
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
-  TODO();
+  Elf_Ehdr elf_header;
+  ramdisk_read(&elf_header, 0, sizeof(Elf_Ehdr));
+  printf("aaaaaaaaaa %d\n", elf_header.e_phnum);
   return 0;
 }
 

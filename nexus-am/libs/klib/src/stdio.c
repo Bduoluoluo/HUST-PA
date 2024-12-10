@@ -87,6 +87,14 @@ int printf(const char *fmt, ...) {
           for (size_t i = 0; i < len; i ++) _putc(s[i]);
           break;
         }
+        case 'p': {
+          unsigned num = va_arg(args, unsigned);
+          char s[25];
+          size_t len = hi2s(s, num, -1, 8);
+          m += len;
+          for (size_t i = 0; i < len; i ++) _putc(s[i]);
+          break;
+        }
         case 's': {
           char *s = va_arg(args, char*);
           size_t len = strlen(s);
@@ -155,6 +163,11 @@ int sprintf(char *out, const char *fmt, ...) {
         case 'x': {
           unsigned num = va_arg(args, unsigned);
           m += hi2s(out + m, num, -1, 0);
+          break;
+        }
+        case 'p': {
+          unsigned num = va_arg(args, unsigned);
+          m += hi2s(out + m, num, -1, 8);
           break;
         }
         case 's': {

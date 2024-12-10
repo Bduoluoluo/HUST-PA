@@ -9,10 +9,23 @@
 # define Elf_Phdr Elf32_Phdr
 #endif
 
+uint8_t tmp[];
+
 static uintptr_t loader(PCB *pcb, const char *filename) {
   Elf_Ehdr elf_header;
+  Elf_Phdr prog_header;
+
   ramdisk_read(&elf_header, 0, sizeof(Elf_Ehdr));
-  printf("aaaaaaaaaa %x\n", elf_header.e_entry);
+  Elf32_Off phoff = elf_header.e_phoff;
+  for (Elf32_Half i = 0; i < elf_header.e_phnum; i ++) {
+    ramdisk_read(&prog_header, phoff, sizeof(Elf_Phdr));
+    uintptr_t segoff = prog_header.p_offset;
+
+
+    phoff += sizeof(Elf_Phdr);
+  }
+
+  // return elf_header.e_entry;
   return 0;
 }
 

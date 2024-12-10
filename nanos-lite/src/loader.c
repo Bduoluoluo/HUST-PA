@@ -12,7 +12,7 @@
 static uintptr_t loader(PCB *pcb, const char *filename) {
   Elf_Ehdr elf_header;
   ramdisk_read(&elf_header, 0, sizeof(Elf_Ehdr));
-  Log("aaaaaaaaaa %d\n", elf_header.e_entry);
+  Log("aaaaaaaaaa %x\n", elf_header.e_entry);
   return 0;
 }
 

@@ -22,8 +22,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     ramdisk_read(&prog_header, phoff, sizeof(Elf_Phdr));
     if (prog_header.p_type != PT_LOAD) continue;
 
-    printf("aaaaaaaaaaaa %x\n", prog_header.p_paddr + prog_header.p_filesz);
-
     uintptr_t segoff = prog_header.p_offset;
     Elf32_Word j = 0;
     ramdisk_read(tmp, segoff, prog_header.p_filesz);
@@ -31,8 +29,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       outb(prog_header.p_vaddr + j, tmp[j]);
     for (; j < prog_header.p_memsz; j ++)
       outb(prog_header.p_vaddr + j, 0);
-
-    printf("%p\n", inl(0x83000238));
 
     phoff += sizeof(Elf_Phdr);
   }

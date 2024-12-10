@@ -2,13 +2,12 @@
 
 // fun3 000
 make_EHelper (ecall) {
-    raise_intr(5, cpu.pc);
+    raise_intr(reg_l(17), cpu.pc);
 
     print_asm("ecall");
 }
 
 make_EHelper (sret) {
-    printf("bbbbbbbbbbbbbb %x\n", sepc);
     rtl_j(sepc + 4);
 
     print_asm("sret");

@@ -22,15 +22,13 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     ramdisk_read(&prog_header, phoff, sizeof(Elf_Phdr));
     if (prog_header.p_type != PT_LOAD) continue;
 
-    printf("aaaaaaaaaaaaaa %d\n", phoff);
-
     uintptr_t segoff = prog_header.p_offset;
     Elf32_Word j = 0;
     ramdisk_read(tmp, segoff, prog_header.p_filesz);
     for (; j < prog_header.p_filesz; j ++)
-      outb(prog_header.p_paddr + j, tmp[j]);
+      outb((128 * 1024 * 1024) + prog_header.p_vaddr + j, tmp[j]);
     for (; j < prog_header.p_memsz; j ++)
-      outb(prog_header.p_paddr + j, 0);
+      outb((128 * 1024 * 1024) + prog_header.p_vaddr + j, 0);
 
     phoff += sizeof(Elf_Phdr);
   }

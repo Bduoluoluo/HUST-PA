@@ -26,9 +26,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     Elf32_Word j = 0;
     ramdisk_read(tmp, segoff, prog_header.p_filesz);
     for (; j < prog_header.p_filesz; j ++)
-      outb(prog_header.p_vaddr + j, tmp[j]);
+      outb(prog_header.p_paddr + j, tmp[j]);
     for (; j < prog_header.p_memsz; j ++)
-      outb(prog_header.p_vaddr + j, 0);
+      outb(prog_header.p_paddr + j, 0);
 
     phoff += sizeof(Elf_Phdr);
   }

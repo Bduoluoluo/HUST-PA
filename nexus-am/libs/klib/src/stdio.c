@@ -34,6 +34,32 @@ size_t i2s (char *dst, int d, size_t n, size_t width) {
   return ret;
 }
 
+size_t hi2s (char *dst, unsigned d, size_t n, size_t width) {
+  char str[25];
+  size_t ret = 0, len = 0;
+  if (d == 0) {
+    str[len ++] = '0';
+    if (width) width --;
+  }
+  while (d) {
+    if (d % 16 < 10) str[len ++] = d % 16 + '0';
+    else str[len ++] = d % 16 - 10 + 'a';
+    d /= 16;
+    if (width) width --;
+  }
+  while (width) {
+    str[len ++] = '0';
+    width --;
+  }
+  while (n && len) {
+    *dst = str[-- len];
+    dst ++;
+    n --;
+    ret ++;
+  }
+  return ret;
+}
+
 int printf(const char *fmt, ...) {
   va_list args;
   size_t m = 0;
@@ -49,6 +75,14 @@ int printf(const char *fmt, ...) {
           int num = va_arg(args, int);
           char s[65];
           size_t len = i2s(s, num, -1, 0);
+          m += len;
+          for (size_t i = 0; i < len; i ++) _putc(s[i]);
+          break;
+        }
+        case 'x': {
+          unsigned num = va_arg(args, unsigned);
+          char s[25];
+          size_t len = hi2s(s, num, -1, 0);
           m += len;
           for (size_t i = 0; i < len; i ++) _putc(s[i]);
           break;
@@ -116,6 +150,11 @@ int sprintf(char *out, const char *fmt, ...) {
         case 'd': {
           int num = va_arg(args, int);
           m += i2s(out + m, num, -1, 0);
+          break;
+        }
+        case 'x': {
+          unsigned num = va_arg(args, unsigned);
+          m += hi2s(out + m, num, -1, 0);
           break;
         }
         case 's': {

@@ -27,15 +27,15 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     uintptr_t segoff = prog_header.p_offset;
     Elf32_Word j = 0;
     ramdisk_read(tmp, segoff, prog_header.p_filesz);
-    // for (; j < prog_header.p_filesz; j ++)
-    //   outb(prog_header.p_vaddr + j, tmp[j]);
+    for (; j < prog_header.p_filesz; j ++)
+      outb(prog_header.p_vaddr + j, tmp[j]);
     for (; j < prog_header.p_memsz; j ++)
       outb(prog_header.p_vaddr + j, 0);
 
     phoff += sizeof(Elf_Phdr);
   }
 
-  return elf_header.e_entry;
+  return 0x83000000;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {

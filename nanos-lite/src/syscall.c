@@ -17,13 +17,15 @@ _Context* do_syscall(_Context *c) {
       c->GPRx = 0;
       break;
     case SYS_write:
-      Log("aaaaaaaaaaaaaaa\n");
       if (a[1] == 1 || a[1] == 2) {
         for (int i = 0; i < a[3]; i ++)
           _putc(((uint8_t *)a[2])[i]);
         c->GPRx = a[3];
       } else
         c->GPRx = -1;
+      break;
+    case SYS_brk:
+      c->GPRx = 0;
       break;
     default:
       panic("Unhandled syscall ID = %d", a[0]);

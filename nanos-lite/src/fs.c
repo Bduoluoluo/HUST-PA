@@ -61,8 +61,7 @@ size_t fs_read (int fd, void *buf, size_t len) {
 }
 
 size_t fs_write (int fd, const void *buf, size_t len) {
-
-  if (file_table[fd].write != NULL || fd == 1)
+  if (file_table[fd].write != NULL)
     return file_table[fd].write(buf, file_table[fd].open_offset, len);
 
   len = min(len, file_table[fd].size - file_table[fd].open_offset);

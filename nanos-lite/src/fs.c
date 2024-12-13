@@ -63,7 +63,7 @@ size_t fs_read (int fd, void *buf, size_t len) {
 size_t fs_write (int fd, const void *buf, size_t len) {
   printf("aaaaaaaaaaa %d\n", file_table[fd].write);
 
-  if (file_table[fd].write != NULL)
+  if (file_table[fd].write != NULL || fd == 1)
     return file_table[fd].write(buf, file_table[fd].open_offset, len);
 
   len = min(len, file_table[fd].size - file_table[fd].open_offset);

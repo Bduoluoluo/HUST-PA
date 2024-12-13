@@ -23,8 +23,8 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 
   _io_read(_DEV_INPUT, _DEVREG_INPUT_KBD, &kbd, sizeof(_DEV_INPUT_KBD_t));
   if (kbd.keycode != _KEY_NONE) {
-    if (kbd.keydown) sprintf(event, "kd %s\n", keyname[kbd.keydown]);
-    else sprintf(event, "ku %s\n", keyname[kbd.keydown]);
+    if (kbd.keydown) sprintf(event, "kd %s\n", keyname[kbd.keycode]);
+    else sprintf(event, "ku %s\n", keyname[kbd.keycode]);
   } else {
     _io_read(_DEV_TIMER, _DEVREG_TIMER_UPTIME, &uptime, sizeof(_DEV_TIMER_UPTIME_t));
     sprintf(event, "t %d\n", uptime.lo);    

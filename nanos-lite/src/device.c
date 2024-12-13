@@ -1,7 +1,7 @@
 #include "common.h"
 #include <amdev.h>
 
-size_t serial_write(const void *buf, size_t offset, size_t len) {
+extern size_t serial_write(const void *buf, size_t offset, size_t len) {
   for (int i = 0; i < len; i ++)
     _putc(((uint8_t *) buf)[i]);
   return len;

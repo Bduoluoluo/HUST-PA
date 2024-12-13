@@ -61,7 +61,6 @@ size_t fs_read (int fd, void *buf, size_t len) {
 }
 
 size_t fs_write (int fd, const void *buf, size_t len) {
-  printf("aaaaaaaaaaa %d\n", file_table[fd].write);
 
   if (file_table[fd].write != NULL || fd == 1)
     return file_table[fd].write(buf, file_table[fd].open_offset, len);
@@ -90,4 +89,5 @@ int fs_close (int fd) {
 
 void init_fs() {
   // TODO: initialize the size of /dev/fb
+  file_table[1].write = invalid_write;
 }

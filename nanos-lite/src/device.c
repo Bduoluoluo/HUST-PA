@@ -1,4 +1,5 @@
 #include "common.h"
+#include <am.h>
 #include <amdev.h>
 
 size_t serial_write(const void *buf, size_t offset, size_t len) {
@@ -16,6 +17,11 @@ static const char *keyname[256] __attribute__((used)) = {
 };
 
 size_t events_read(void *buf, size_t offset, size_t len) {
+  _DEV_INPUT_KBD_t kbd;
+
+
+  _io_read(_DEV_INPUT, _DEVREG_INPUT_KBD, &kbd, sizeof(_DEV_INPUT_KBD_t));
+
   return 0;
 }
 

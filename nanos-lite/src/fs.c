@@ -88,5 +88,5 @@ int fs_close (int fd) {
 
 void init_fs() {
   // TODO: initialize the size of /dev/fb
-  file_table[1].write = invalid_write;
+  // file_table[1].write = invalid_write;
 }

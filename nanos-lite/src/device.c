@@ -25,12 +25,14 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   if (kbd.keycode != _KEY_NONE) {
     if (kbd.keydown) sprintf(event, "kd %s\n", keyname[kbd.keydown]);
     else sprintf(event, "ku %s\n", keyname[kbd.keydown]);
-    return strncpy(buf, event, len);
+  } else {
+    _io_read(_DEV_TIMER, _DEVREG_TIMER_UPTIME, &uptime, sizeof(_DEV_TIMER_UPTIME_t));
+    sprintf(event, "t %d\n", uptime.lo);    
   }
 
-  _io_read(_DEV_TIMER, _DEVREG_TIMER_UPTIME, &uptime, sizeof(_DEV_TIMER_UPTIME_t));
-  sprintf(event, "t %d\n", uptime.lo);
-  return strncpy(buf, event, len);
+  strncpy(buf, event, len);
+  if (strlen(event) < len) len = strlen(len);
+  return len;
 }
 
 static char dispinfo[128] __attribute__((used)) = {};

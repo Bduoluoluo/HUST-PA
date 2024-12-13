@@ -1,4 +1,5 @@
 #include "proc.h"
+#include "fs.h"
 #include <elf.h>
 
 #ifdef __ISA_AM_NATIVE__
@@ -12,17 +13,22 @@
 uint8_t tmp[1048576];
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
+  int fd = fs_open(filename, 0, 0);
+
   Elf_Ehdr elf_header;
   Elf_Phdr prog_header;
 
-  ramdisk_read(&elf_header, 0, sizeof(Elf_Ehdr));
+  fs_lseek(fd, 0, SEEK_SET);
+  fs_read(fd, &elf_header, sizeof(Elf_Ehdr));
   Elf32_Off phoff = elf_header.e_phoff;
   for (Elf32_Half i = 0; i < elf_header.e_phnum; i ++) {
-    ramdisk_read(&prog_header, phoff, sizeof(Elf_Phdr));
+    fs_lseek(fd, phoff, SEEK_SET);
+    fs_read(fd, &prog_header, sizeof(Elf_Phdr));
     if (prog_header.p_type != PT_LOAD) continue;
 
     uintptr_t segoff = prog_header.p_offset;
-    ramdisk_read(tmp, segoff, prog_header.p_filesz);
+    fs_lseek(fd, segoff, SEEK_SET);
+    fs_read(fd, tmp, prog_header.p_filesz);
     memcpy((void*)prog_header.p_vaddr, tmp, prog_header.p_filesz);
     memset((void*)prog_header.p_vaddr + prog_header.p_filesz, 0, prog_header.p_memsz - prog_header.p_filesz);
 

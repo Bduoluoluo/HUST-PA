@@ -32,7 +32,53 @@ static Finfo file_table[] __attribute__((used)) = {
 #include "files.h"
 };
 
+size_t min (size_t x, size_t y) {
+  return (x < y) ? x : y;
+}
+
 #define NR_FILES (sizeof(file_table) / sizeof(file_table[0]))
+
+int fs_open (const char *pathname, int flags, int mode) {
+  int fd = -1;
+  for (int i = 0; i < NR_FILES; i ++)
+    if (strcmp(file_table[i].name, pathname) == 0) {
+      fd = i;
+      break;
+    }
+  assert(fd != -1);
+
+  return fd;
+}
+
+size_t fs_read (int fd, void *buf, size_t len) {
+  len = min(len, file_table[fd].size - file_table[fd].open_offset);
+  ramdisk_read(buf, file_table[fd].disk_offset + file_table[fd].open_offset, len);
+  file_table[fd].open_offset += len;
+  return len;
+}
+
+size_t fs_write (int fd, const void *buf, size_t len) {
+  len = min(len, file_table[fd].size - file_table[fd].open_offset);
+  ramdisk_write(buf, file_table[fd].disk_offset + file_table[fd].open_offset, len);
+  file_table[fd].open_offset += len;
+  return len;
+}
+
+size_t fs_lseek (int fd, size_t offset, int whence) {
+  size_t real_offset;
+  switch (whence) {
+    case SEEK_SET: real_offset = offset; break;
+    case SEEK_CUR: real_offset = min(file_table[fd].size, file_table[fd].open_offset + offset); break;
+    case SEEK_END: real_offset = min(file_table[fd].size, file_table[fd].size + offset); break;
+    default: return -1;
+  }
+  file_table[fd].open_offset = real_offset;
+  return real_offset;
+}
+
+int fs_close (int fd) {
+  return 0;
+}
 
 void init_fs() {
   // TODO: initialize the size of /dev/fb

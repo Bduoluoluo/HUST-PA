@@ -17,7 +17,6 @@ _Context* do_syscall(_Context *c) {
       c->GPRx = 0;
       break;
     case SYS_write:
-      Log("aaaaaaaaaaaaaaaaa\n");
       if (a[1] == 1 || a[1] == 2) {
         for (int i = 0; i < a[3]; i ++)
           _putc(((uint8_t *)a[2])[i]);

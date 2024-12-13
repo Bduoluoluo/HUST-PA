@@ -31,7 +31,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   }
 
   strncpy(buf, event, len);
-  if (strlen(event) < len) len = strlen(len);
+  if (strlen(event) < len) len = strlen(event);
   return len;
 }
 

@@ -32,6 +32,14 @@ make_EHelper (slli) {
 }
 // --------
 
+// fun3 010
+make_EHelper (slti) {
+  rtl_setrelop(RELOP_LT, &s0, &id_src->val, &id_src2->val);
+  rtl_sr(id_dest->reg, &s0, 4);
+  
+  print_asm_template3(slti);
+}
+
 // fun3 011
 make_EHelper (sltiu) {
   rtl_setrelop(RELOP_LTU, &s0, &id_src->val, &id_src2->val);

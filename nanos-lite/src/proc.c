@@ -27,7 +27,7 @@ void init_proc() {
   Log("Initializing processes...");
 
   // load program here
-  naive_uload(NULL, "/bin/bmptest");
+  naive_uload(NULL, "/share/games/nes/mario.nes");
 }
 
 _Context* schedule(_Context *prev) {

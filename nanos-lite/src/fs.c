@@ -110,4 +110,5 @@ int fs_close (int fd) {
 void init_fs() {
   // TODO: initialize the size of /dev/fb
   file_table[FD_FB].size = screen_height() * screen_width();
+  printf("aaaaaaaaa %d\n", file_table[FD_FB].size);
 }

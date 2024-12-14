@@ -45,6 +45,7 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   if (!len) return 0;
 
   size_t width = screen_width();
+  printf("aaaaaaaaaaaa %d\n", width);
   int p = 0;
   for (int i = offset / width; i <= (offset + len - 1) / width; i ++) {
     int l = 0, r = width - 1;

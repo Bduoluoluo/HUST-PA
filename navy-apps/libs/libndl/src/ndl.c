@@ -32,7 +32,6 @@ int NDL_OpenDisplay(int w, int h) {
     evtdev = stdin;
   } else {
     get_display_info();
-    printf("aaaaaaaaaaaaaaaaaaa\n");
     assert(screen_w >= canvas_w);
     assert(screen_h >= canvas_h);
     pad_x = (screen_w - canvas_w) / 2;
@@ -130,6 +129,7 @@ int NDL_WaitEvent(NDL_Event *event) {
 }
 
 static void get_display_info() {
+  printf("aaaaaaaaaaaaaaaa\n");
   FILE *dispinfo = fopen("/proc/dispinfo", "r");
   assert(dispinfo);
   screen_w = screen_h = 0;

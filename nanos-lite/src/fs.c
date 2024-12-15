@@ -60,6 +60,7 @@ int fs_open (const char *pathname, int flags, int mode) {
       break;
     }
   assert(fd != -1);
+  file_table[fd].open_offset = 0;
 
   return fd;
 }

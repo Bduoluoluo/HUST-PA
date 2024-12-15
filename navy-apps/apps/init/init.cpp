@@ -65,14 +65,10 @@ static void clear_display();
 static void display_menu(int n);
 
 int main(int argc, char *argv[], char *envp[]) {
-  printf("aaaaaaaaaaaaaaaaaa\n");
-  if (!freopen("/dev/tty", "r", stdin) ||
-      !freopen("/dev/tty", "w", stderr)) {
+  if (0) {
     // the OS does not meet the spec
-    
     exit(1);
   }
-  
 
   open_display();
 

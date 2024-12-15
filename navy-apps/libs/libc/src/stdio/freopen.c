@@ -83,7 +83,7 @@ _freopen_r (struct _reent *ptr,
   register int f;
   int flags, oflags, oflags2;
   int e = 0;
-
+  printf("aaaaaaaaaaaaaaaaaa\n");
   CHECK_INIT (ptr, fp);
 
   /* We can't use the _newlib_flockfile_XXX macros here due to the

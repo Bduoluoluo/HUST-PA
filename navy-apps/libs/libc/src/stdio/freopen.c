@@ -230,13 +230,12 @@ _freopen_r (struct _reent *ptr,
   if (__stextmode (fp->_file))
     fp->_flags |= __SCLE;
 #endif
-
+  printf("aaaaaaaaaaaaaaaaaa\n");
   if (!(oflags2 & __SNLK))
     _funlockfile (fp);
 #ifdef _STDIO_WITH_THREAD_CANCELLATION_SUPPORT
   pthread_setcancelstate (__oldcancel, &__oldcancel);
 #endif
-  printf("aaaaaaaaaaaaaaaaaa\n");
   return fp;
 }
 

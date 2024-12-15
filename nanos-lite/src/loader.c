@@ -10,7 +10,7 @@
 # define Elf_Phdr Elf32_Phdr
 #endif
 
-uint8_t tmp[1048576];
+uint8_t tmp[27987243];
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
   int fd = fs_open(filename, 0, 0);

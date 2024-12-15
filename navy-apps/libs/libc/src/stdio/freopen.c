@@ -217,7 +217,7 @@ _freopen_r (struct _reent *ptr,
 #endif
       return NULL;
     }
-  printf("aaaaaaaaaaaaaaaaaa\n");
+
   fp->_flags = flags;
   fp->_file = f;
   fp->_cookie = (void *) fp;
@@ -225,7 +225,7 @@ _freopen_r (struct _reent *ptr,
   fp->_write = __swrite;
   fp->_seek = __sseek;
   fp->_close = __sclose;
-
+printf("aaaaaaaaaaaaaaaaaa\n");
 #ifdef __SCLE
   if (__stextmode (fp->_file))
     fp->_flags |= __SCLE;

@@ -217,10 +217,11 @@ _freopen_r (struct _reent *ptr,
 #endif
       return NULL;
     }
-printf("aaaaaaaaaaaaaaaaaa\n");
+
   fp->_flags = flags;
   fp->_file = f;
   fp->_cookie = (void *) fp;
+  printf("aaaaaaaaaaaaaaaaaa\n");
   fp->_read = __sread;
   fp->_write = __swrite;
   fp->_seek = __sseek;

@@ -73,7 +73,7 @@ int main(int argc, char *argv[], char *envp[]) {
   // }
 
   open_display();
-
+  printf("aaaaaaaaaaaaa\n");
   evtdev = fopen("/dev/events", "r");
   font = new Font(font_fname);
   NDL_LoadBitmap(&logo, "/share/pictures/projectn.bmp");

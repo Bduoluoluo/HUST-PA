@@ -112,5 +112,5 @@ void init_fs() {
   // TODO: initialize the size of /dev/fb
   file_table[FD_FB].size = screen_height() * screen_width();
   extern size_t dispinfo_len;
-  // file_table[fs_open("/proc/dispinfo", 0, 0)].size = dispinfo_len;
+  file_table[fs_open("/proc/dispinfo", 0, 0)].size = dispinfo_len;
 }

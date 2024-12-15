@@ -71,9 +71,9 @@ int main(int argc, char *argv[], char *envp[]) {
   //   // the OS does not meet the spec
   //   exit(1);
   // }
-
-  open_display();
   printf("aaaaaaaaaaaaa\n");
+  open_display();
+
   evtdev = fopen("/dev/events", "r");
   font = new Font(font_fname);
   NDL_LoadBitmap(&logo, "/share/pictures/projectn.bmp");

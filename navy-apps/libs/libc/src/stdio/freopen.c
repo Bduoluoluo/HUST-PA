@@ -217,9 +217,8 @@ _freopen_r (struct _reent *ptr,
 #endif
       return NULL;
     }
-
-  fp->_flags = flags;
   printf("aaaaaaaaaaaaaaaaaa\n");
+  fp->_flags = flags;
   fp->_file = f;
   fp->_cookie = (void *) fp;
   fp->_read = __sread;

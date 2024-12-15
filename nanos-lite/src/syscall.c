@@ -39,7 +39,7 @@ _Context* do_syscall(_Context *c) {
       c->GPRx = 0;
       break;
     case SYS_execve:
-      naive_uload(NULL, a[1]);
+      naive_uload(NULL, (const char *) a[1]);
       c->GPRx = 0;
       break;
     default:

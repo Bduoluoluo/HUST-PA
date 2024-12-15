@@ -175,7 +175,7 @@ _freopen_r (struct _reent *ptr,
 	    fp->_close (ptr, fp->_cookie);
 	}
     }
-  printf("aaaaaaaaaaaaaaaaaa\n");
+
   /*
    * Finish closing fp.  Even if the open succeeded above,
    * we cannot keep fp->_base: it may be the wrong size.
@@ -217,7 +217,7 @@ _freopen_r (struct _reent *ptr,
 #endif
       return NULL;
     }
-
+  printf("aaaaaaaaaaaaaaaaaa\n");
   fp->_flags = flags;
   fp->_file = f;
   fp->_cookie = (void *) fp;

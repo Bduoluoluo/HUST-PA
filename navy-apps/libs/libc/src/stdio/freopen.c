@@ -128,7 +128,7 @@ _freopen_r (struct _reent *ptr,
       if (fp->_close != NULL && file != NULL)
 	fp->_close (ptr, fp->_cookie);
     }
-  printf("aaaaaaaaaaaaaaaaaa\n");
+
   /*
    * Now get a new descriptor to refer to the new file, or reuse the
    * existing file descriptor if file is NULL.
@@ -175,7 +175,7 @@ _freopen_r (struct _reent *ptr,
 	    fp->_close (ptr, fp->_cookie);
 	}
     }
-
+  printf("aaaaaaaaaaaaaaaaaa\n");
   /*
    * Finish closing fp.  Even if the open succeeded above,
    * we cannot keep fp->_base: it may be the wrong size.

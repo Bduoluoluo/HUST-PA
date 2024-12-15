@@ -217,7 +217,7 @@ _freopen_r (struct _reent *ptr,
 #endif
       return NULL;
     }
-  printf("aaaaaaaaaaaaaaaaaa\n");
+
   fp->_flags = flags;
   fp->_file = f;
   fp->_cookie = (void *) fp;
@@ -236,6 +236,7 @@ _freopen_r (struct _reent *ptr,
 #ifdef _STDIO_WITH_THREAD_CANCELLATION_SUPPORT
   pthread_setcancelstate (__oldcancel, &__oldcancel);
 #endif
+  printf("aaaaaaaaaaaaaaaaaa\n");
   return fp;
 }
 

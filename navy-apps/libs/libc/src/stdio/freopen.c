@@ -83,7 +83,7 @@ _freopen_r (struct _reent *ptr,
   register int f;
   int flags, oflags, oflags2;
   int e = 0;
-  printf("aaaaaaaaaaaaaaaaaa\n");
+
   CHECK_INIT (ptr, fp);
 
   /* We can't use the _newlib_flockfile_XXX macros here due to the
@@ -106,7 +106,7 @@ _freopen_r (struct _reent *ptr,
       _fclose_r (ptr, fp);
       return NULL;
     }
-
+  printf("aaaaaaaaaaaaaaaaaa\n");
   /*
    * Remember whether the stream was open to begin with, and
    * which file descriptor (if any) was associated with it.

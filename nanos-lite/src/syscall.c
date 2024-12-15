@@ -14,7 +14,8 @@ _Context* do_syscall(_Context *c) {
 
   switch (a[0]) {
     case SYS_exit:
-      _halt(0);
+      naive_uload(NULL, "/bin/init");
+      c->GPRx = 0;
       break;
     case SYS_yield:
       _yield();

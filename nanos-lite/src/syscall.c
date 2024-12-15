@@ -1,6 +1,9 @@
 #include "common.h"
 #include "syscall.h"
 #include "fs.h"
+#include "proc.h"
+
+extern void naive_uload(PCB *pcb, const char *filename);
 
 _Context* do_syscall(_Context *c) {
   uintptr_t a[4];

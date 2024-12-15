@@ -219,9 +219,9 @@ _freopen_r (struct _reent *ptr,
     }
 
   fp->_flags = flags;
+  printf("aaaaaaaaaaaaaaaaaa\n");
   fp->_file = f;
   fp->_cookie = (void *) fp;
-  printf("aaaaaaaaaaaaaaaaaa\n");
   fp->_read = __sread;
   fp->_write = __swrite;
   fp->_seek = __sseek;

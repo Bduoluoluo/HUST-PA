@@ -31,6 +31,8 @@ _Context* __am_irq_handle(_Context *c) {
     }
   }
 
+  printf("%x\n", next);
+
   return next;
 }
 

@@ -47,7 +47,12 @@ int _cte_init(_Context*(*handler)(_Event, _Context*)) {
 }
 
 _Context *_kcontext(_Area stack, void (*entry)(void *), void *arg) {
-  return NULL;
+  _Context* cp = (uint32_t *)stack.end - 35;
+  cp->cause = -1;
+  cp->epc = entry;
+
+
+  return cp;
 }
 
 void _yield() {

@@ -39,7 +39,7 @@ __am_asm_trap:
   mv a0, sp
   jal __am_irq_handle
 
-  bnez a0, R
+  beqz a0, R
   mv sp, a0
 R:
   lw t1, OFFSET_STATUS(sp)

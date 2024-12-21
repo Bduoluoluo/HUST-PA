@@ -21,6 +21,7 @@ void hello_fun(void *arg) {
 
 extern void naive_uload (PCB *pcb, const char *filename);
 extern void context_kload (PCB *pcb, void *entry);
+extern void context_uload (PCB *pcb, const char *filename);
 
 void init_proc() {
   context_kload(&pcb[0], (void *)hello_fun);

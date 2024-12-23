@@ -14,10 +14,11 @@ typedef struct {
 
 } CPU_state;
 
-extern rtlreg_t stvec, sepc, scause, sstatus;
+extern rtlreg_t stvec, sepc, scause, sstatus, satp;
 
 static inline rtlreg_t* get_csr (uint32_t csr) {
   switch (csr) {
+    printf("%x\n", csr);
     case 0b000100000101: return &stvec;
     case 0b000101000001: return &sepc;
     case 0b000101000010: return &scause;

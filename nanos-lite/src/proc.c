@@ -24,7 +24,8 @@ extern void context_kload (PCB *pcb, void *entry);
 extern void context_uload (PCB *pcb, const char *filename);
 
 void init_proc() {
-  context_kload(&pcb[0], (void *)hello_fun);
+  // context_kload(&pcb[0], (void *)hello_fun);
+  context_uload(&pcb[0], "/bin/hello");
   context_uload(&pcb[1], "/bin/init");
   switch_boot_pcb();
 

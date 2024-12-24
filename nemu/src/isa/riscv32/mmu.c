@@ -15,6 +15,7 @@ uint32_t isa_vaddr_read(vaddr_t addr, int len) {
     assert(0);
   } else {
     paddr_t paddr = page_translate(addr);
+    printf("%x aaaaaaaaaaaa\n", paddr);
     return paddr_read(paddr, len);
   }
 }

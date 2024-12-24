@@ -1,6 +1,7 @@
 #include "nemu.h"
 
 paddr_t page_translate (vaddr_t addr) {
+  if ((satp >> 31) & 1 == 0) return addr;
   uint32_t vpn1 = addr >> 22, vpn2 = (addr >> 12) & 0x3ff, offset = addr & 0xfff;
   uint32_t pte = paddr_read((satp << 12) + vpn1 * 4, 4);
   assert(pte & 1);
@@ -13,9 +14,7 @@ uint32_t isa_vaddr_read(vaddr_t addr, int len) {
   if ((addr >> 12) != ((addr + len - 1) >> 12)) {
     assert(0);
   } else {
-    printf("%x aaaaaaaaaaaa\n", addr);
     paddr_t paddr = page_translate(addr);
-    printf("%x aaaaaaaaaaaa\n", addr);
     return paddr_read(paddr, len);
   }
 }

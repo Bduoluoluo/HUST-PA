@@ -1,7 +1,6 @@
 #include <am.h>
 #include <riscv32.h>
 #include <nemu.h>
-#include <stdio.h>
 
 #define PG_ALIGN __attribute((aligned(PGSIZE)))
 
@@ -83,7 +82,6 @@ void __am_switch(_Context *c) {
 }
 
 int _map(_AddressSpace *as, void *va, void *pa, int prot) {
-  printf("aaaaaaaaaaaaaa\n");
   return 0;
 }
 

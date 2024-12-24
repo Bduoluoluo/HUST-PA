@@ -11,6 +11,7 @@ paddr_t page_translate (vaddr_t addr) {
 }
 
 uint32_t isa_vaddr_read(vaddr_t addr, int len) {
+  printf("aaaaaaaaaaaaaa\n");
   if ((addr >> 12) != ((addr + len - 1) >> 12)) {
     assert(0);
   } else {

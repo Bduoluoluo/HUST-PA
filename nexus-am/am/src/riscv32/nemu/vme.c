@@ -49,6 +49,8 @@ int _vme_init(void* (*pgalloc_f)(size_t), void (*pgfree_f)(void*)) {
     }
   }
 
+  printf("%x aaaaaaaaaaaaaaaa\n", kpdirs);
+
   set_satp(kpdirs);
   vme_enable = 1;
 

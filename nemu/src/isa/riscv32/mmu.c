@@ -23,6 +23,6 @@ void isa_vaddr_write(vaddr_t addr, uint32_t data, int len) {
     assert(0);
   } else {
     paddr_t paddr = page_translate(addr);
-    paddr_write(addr, data, len);
+    paddr_write(paddr, data, len);
   }
 }

@@ -30,12 +30,14 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
     uintptr_t segoff = prog_header.p_offset;
     fs_lseek(fd, segoff, SEEK_SET);
-    fs_read(fd, tmp, prog_header.p_filesz);
 
-    uintptr_t paddr = (uintptr_t)new_page(1);
-    _map(&(pcb->as), (void *)prog_header.p_vaddr, (void *)paddr, 0x01 | 0x02 | 0x04 | 0x08 | 0x10);
-    memcpy((void*)paddr, tmp, prog_header.p_filesz);
-    memset((void*)paddr + prog_header.p_filesz, 0, prog_header.p_memsz - prog_header.p_filesz);
+    for (size_t off = 0; off < prog_header.p_memsz; off += PGSIZE) {
+      uintptr_t paddr = (uintptr_t)new_page(1);
+      _map(&(pcb->as), (void *)(prog_header.p_vaddr + off), (void *)paddr, 0x01 | 0x02 | 0x04 | 0x08 | 0x10);
+      memset((void *)paddr, 0, PGSIZE);
+      if (off < prog_header.p_filesz)
+        fs_read(fd, (void *)paddr, min(PGSIZE, prog_header.p_filesz - off));
+    }
 
     phoff += sizeof(Elf_Phdr);
   }

@@ -10,8 +10,6 @@
 # define Elf_Phdr Elf32_Phdr
 #endif
 
-uint8_t tmp[32768];
-
 extern void* new_page (size_t nr_page);
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
@@ -36,7 +34,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       _map(&(pcb->as), (void *)(prog_header.p_vaddr + off), (void *)paddr, 0x01 | 0x02 | 0x04 | 0x08 | 0x10);
       memset((void *)paddr, 0, PGSIZE);
       if (off < prog_header.p_filesz)
-        fs_read(fd, (void *)paddr, min(PGSIZE, prog_header.p_filesz - off));
+        fs_read(fd, (void *)paddr, prog_header.p_filesz - off < PGSIZE ? prog_header.p_filesz - off : PGSIZE);
     }
 
     phoff += sizeof(Elf_Phdr);

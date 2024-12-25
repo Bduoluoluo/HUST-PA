@@ -16,11 +16,14 @@ void free_page(void *p) {
 
 extern PCB *current;
 
+uintptr_t max (uintptr_t x, uintptr_t y) {
+  return x > y ? x : y;
+}
+
 /* The brk() system call handler. */
 int mm_brk(uintptr_t brk, intptr_t increment) {
   if (current->max_brk < brk) {
-    printf("%x %x %d\n", current->max_brk, brk, increment);
-    for (uintptr_t i = PGROUNDUP(current->max_brk); i <= PGROUNDDOWN(brk); i += PGSIZE) {
+    for (uintptr_t i = PGROUNDUP(max(current->max_brk, brk - increment)); i <= PGROUNDDOWN(brk); i += PGSIZE) {
       uintptr_t pa = (uintptr_t)new_page(1);
       _map(&(current->as), (void *)i, (void *)pa, 0);
     }

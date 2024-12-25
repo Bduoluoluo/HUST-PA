@@ -12,6 +12,8 @@
 
 uint8_t tmp[1048576];
 
+extern void* new_page (size_t nr_page);
+
 static uintptr_t loader(PCB *pcb, const char *filename) {
   int fd = fs_open(filename, 0, 0);
 
@@ -29,8 +31,11 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     uintptr_t segoff = prog_header.p_offset;
     fs_lseek(fd, segoff, SEEK_SET);
     fs_read(fd, tmp, prog_header.p_filesz);
-    memcpy((void*)prog_header.p_vaddr, tmp, prog_header.p_filesz);
-    memset((void*)prog_header.p_vaddr + prog_header.p_filesz, 0, prog_header.p_memsz - prog_header.p_filesz);
+
+    uintptr_t paddr = new_page(1);
+    _map(&(pcb->as), prog_header.p_vaddr, paddr, 0x01 | 0x02 | 0x04 | 0x08 | 0x10);
+    memcpy((void*)paddr, tmp, prog_header.p_filesz);
+    memset((void*)paddr + prog_header.p_filesz, 0, prog_header.p_memsz - prog_header.p_filesz);
 
     phoff += sizeof(Elf_Phdr);
   }
@@ -53,6 +58,7 @@ void context_kload(PCB *pcb, void *entry) {
 }
 
 void context_uload(PCB *pcb, const char *filename) {
+  _protect(&(pcb->as));
   uintptr_t entry = loader(pcb, filename);
 
   _Area stack;

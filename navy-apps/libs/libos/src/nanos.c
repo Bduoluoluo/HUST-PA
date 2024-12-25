@@ -65,7 +65,7 @@ extern char end;
 intptr_t program_break = &end;
 
 void* _sbrk (intptr_t increment) {
-  intptr_t ret = _syscall_(SYS_brk, program_break + increment, 0, 0);
+  intptr_t ret = _syscall_(SYS_brk, program_break + increment, increment, 0);
   if (!ret) {
     ret = program_break;
     program_break += increment;

@@ -37,6 +37,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     memcpy((void*)paddr, tmp, prog_header.p_filesz);
     memset((void*)paddr + prog_header.p_filesz, 0, prog_header.p_memsz - prog_header.p_filesz);
 
+    printf("%x aaaaaaaaa\n", prog_header.p_vaddr);
+
     phoff += sizeof(Elf_Phdr);
   }
 

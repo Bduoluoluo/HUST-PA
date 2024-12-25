@@ -17,30 +17,42 @@ extern void* new_page (size_t nr_page);
 static uintptr_t loader(PCB *pcb, const char *filename) {
   int fd = fs_open(filename, 0, 0);
 
-  Elf_Ehdr elf_header;
-  Elf_Phdr prog_header;
+  Elf_Ehdr Ehdr;
+  fs_read(fd, (void *)&Ehdr, sizeof(Elf_Ehdr));
+  if (memcmp(Ehdr.e_ident, ELFMAG, SELFMAG))
+    panic("file %s ELF format error!", filename);
 
-  fs_lseek(fd, 0, SEEK_SET);
-  fs_read(fd, &elf_header, sizeof(Elf_Ehdr));
-  Elf32_Off phoff = elf_header.e_phoff;
-  for (Elf32_Half i = 0; i < elf_header.e_phnum; i ++) {
-    fs_lseek(fd, phoff, SEEK_SET);
-    fs_read(fd, &prog_header, sizeof(Elf_Phdr));
-    if (prog_header.p_type != PT_LOAD) continue;
+  for (size_t i = 0; i < Ehdr.e_phnum; ++i) {
+    Elf_Phdr Phdr;
+    fs_lseek(fd, Ehdr.e_phoff + Ehdr.e_phentsize * i, SEEK_SET);
+    fs_read(fd, (void *)&Phdr, Ehdr.e_phentsize);
+    if (Phdr.p_type == PT_LOAD) {
+      fs_lseek(fd, Phdr.p_offset, SEEK_SET);
 
-    uintptr_t segoff = prog_header.p_offset;
-    fs_lseek(fd, segoff, SEEK_SET);
-    fs_read(fd, tmp, prog_header.p_filesz);
-
-    uintptr_t paddr = (uintptr_t)new_page(1);
-    _map(&(pcb->as), (void *)prog_header.p_vaddr, (void *)paddr, 0x01 | 0x02 | 0x04 | 0x08 | 0x10);
-    memcpy((void*)paddr, tmp, prog_header.p_filesz);
-    memset((void*)paddr + prog_header.p_filesz, 0, prog_header.p_memsz - prog_header.p_filesz);
-
-    phoff += sizeof(Elf_Phdr);
+#ifdef HAS_VME
+      void *vaddr = (void *)Phdr.p_vaddr;
+      void *paddr;
+      int count=0;
+      for(size_t i=0,sz = Phdr.p_memsz; i<sz; i+=PGSIZE){
+          size_t read_bytes = ((sz-i)>=PGSIZE) ? PGSIZE : (sz-i);
+          paddr = new_page(1);
+          count++;
+          _map(&pcb->as, vaddr, paddr,0);
+          fs_read(fd, paddr, read_bytes);
+          // pcb->max_brk = (uintptr_t)vaddr+PGSIZE;
+          vaddr += PGSIZE;
+        }
+        memset((void*)(paddr-(count-1)*PGSIZE+Phdr.p_filesz), 0, Phdr.p_memsz-Phdr.p_filesz);
+#else
+      fs_read(fd, (void *)Phdr.p_vaddr, Phdr.p_filesz);
+      memset((void *)(Phdr.p_vaddr + Phdr.p_filesz), 0, Phdr.p_memsz - Phdr.p_filesz);
+#endif
+    }
   }
 
-  return elf_header.e_entry;
+  fs_close(fd);
+
+  return Ehdr.e_entry;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {

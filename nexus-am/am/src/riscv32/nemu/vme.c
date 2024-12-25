@@ -85,11 +85,11 @@ int _map(_AddressSpace *as, void *va, void *pa, int prot) {
   PDE* dirs = (PTE *)as->ptr;
   if (!(dirs[PDX(va)] & PTE_V)) {
     PTE* new_tabs = (PTE *)(pgalloc_usr(1));
-    dirs[PDX(va)] = ((PTE)new_tabs >> 2) | 1;
+    dirs[PDX(va)] = (((PTE)new_tabs >> 12) << 10) | PTE_V;
   }
 
   PTE* tabs = (PTE *)PTE_ADDR(dirs[PDX(va)]);
-  tabs[PTX(va)] = (((PTE)pa & ~0xfff) >> 2) | prot | PTE_V;
+  tabs[PTX(va)] = ((((PTE)pa & ~0xfff) >> 12) << 10) | prot | PTE_V;
   return 0;
 }
 

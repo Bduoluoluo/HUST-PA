@@ -34,8 +34,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
     uintptr_t paddr = (uintptr_t)new_page(1);
     _map(&(pcb->as), (void *)prog_header.p_vaddr, (void *)paddr, 0x01 | 0x02 | 0x04 | 0x08 | 0x10);
-    // memcpy((void*)paddr, tmp, prog_header.p_filesz);
-    // memset((void*)paddr + prog_header.p_filesz, 0, prog_header.p_memsz - prog_header.p_filesz);
+    memcpy((void*)paddr, tmp, prog_header.p_filesz);
+    memset((void*)paddr + prog_header.p_filesz, 0, prog_header.p_memsz - prog_header.p_filesz);
 
     phoff += sizeof(Elf_Phdr);
   }

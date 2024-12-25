@@ -32,8 +32,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     fs_lseek(fd, segoff, SEEK_SET);
     fs_read(fd, tmp, prog_header.p_filesz);
 
-    uintptr_t paddr = new_page(1);
-    _map(&(pcb->as), prog_header.p_vaddr, paddr, 0x01 | 0x02 | 0x04 | 0x08 | 0x10);
+    uintptr_t paddr = (void *)new_page(1);
+    _map(&(pcb->as), (void *)prog_header.p_vaddr, (void *)paddr, 0x01 | 0x02 | 0x04 | 0x08 | 0x10);
     memcpy((void*)paddr, tmp, prog_header.p_filesz);
     memset((void*)paddr + prog_header.p_filesz, 0, prog_header.p_memsz - prog_header.p_filesz);
 

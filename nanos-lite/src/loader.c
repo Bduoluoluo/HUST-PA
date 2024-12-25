@@ -10,7 +10,7 @@
 # define Elf_Phdr Elf32_Phdr
 #endif
 
-uint8_t tmp[4096];
+uint8_t tmp[32768];
 
 extern void* new_page (size_t nr_page);
 

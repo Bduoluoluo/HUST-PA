@@ -31,7 +31,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
     for (size_t off = 0; off < prog_header.p_memsz; off += PGSIZE) {
       uintptr_t paddr = (uintptr_t)new_page(1);
-      _map(&(pcb->as), (void *)(prog_header.p_vaddr + off), (void *)paddr, 0x01 | 0x02 | 0x04 | 0x08 | 0x10);
+      _map(&(pcb->as), (void *)(prog_header.p_vaddr + off), (void *)paddr, 0);
       memset((void *)paddr, 0, PGSIZE);
       if (off < prog_header.p_filesz)
         fs_read(fd, (void *)paddr, prog_header.p_filesz - off < PGSIZE ? prog_header.p_filesz - off : PGSIZE);

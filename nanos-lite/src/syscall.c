@@ -4,6 +4,7 @@
 #include "proc.h"
 
 extern void naive_uload(PCB *pcb, const char *filename);
+extern int mm_brk (uintptr_t brk, intptr_t increment);
 
 _Context* do_syscall(_Context *c) {
   uintptr_t a[4];
@@ -38,7 +39,7 @@ _Context* do_syscall(_Context *c) {
       c->GPRx = fs_lseek(a[1], a[2], a[3]);
       break;
     case SYS_brk:
-      c->GPRx = 0;
+      c->GPRx = mm_brk(a[1], a[2]);
       break;
     case SYS_execve:
       naive_uload(NULL, (const char *) a[1]);

@@ -61,6 +61,7 @@ size_t hi2s (char *dst, unsigned d, size_t n, size_t width) {
 }
 
 int printf(const char *fmt, ...) {
+  _putc("a");
   va_list args;
   size_t m = 0;
   const char *p = fmt;

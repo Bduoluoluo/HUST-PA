@@ -659,6 +659,7 @@ _VFPRINTF_R (struct _reent *data,
        const char *fmt0,
        va_list ap)
 {
+	write(1, "Hello World!\n", 13);
 	register char *fmt;	/* format string */
 	register int ch;	/* character from fmt */
 	register int n, m;	/* handy integers (short term usage) */

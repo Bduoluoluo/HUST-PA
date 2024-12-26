@@ -47,7 +47,6 @@ _iprintf_r (struct _reent *, const char *, ...)
 int
 printf (const char *__restrict fmt, ...)
 {
-  write(1, "Hello World!\n", 13);
   int ret;
   va_list ap;
   struct _reent *ptr = _REENT;

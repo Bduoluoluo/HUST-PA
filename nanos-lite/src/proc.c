@@ -11,12 +11,12 @@ void switch_boot_pcb() {
 }
 
 void hello_fun(void *arg) {
-  int j = 1;
-  while (1) {
-    Log("Hello World from Nanos-lite for the %dth time!", j);
-    j ++;
-    _yield();
-  }
+  // int j = 1;
+  // while (1) {
+  //   Log("Hello World from Nanos-lite for the %dth time!", j);
+  //   j ++;
+  //   _yield();
+  // }
 }
 
 extern void naive_uload (PCB *pcb, const char *filename);

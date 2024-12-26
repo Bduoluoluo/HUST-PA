@@ -22,8 +22,6 @@ uintptr_t max (uintptr_t x, uintptr_t y) {
 
 /* The brk() system call handler. */
 int mm_brk(uintptr_t brk, intptr_t increment) {
-  printf("aaaaaaaaaaaaaaaa %x %x\n", brk, increment);
-
   if (current->max_brk < brk) {
     for (uintptr_t i = PGROUNDDOWN(max(current->max_brk, brk - increment)); i <= PGROUNDDOWN(brk); i += PGSIZE) {
       uintptr_t pa = (uintptr_t)new_page(1);

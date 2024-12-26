@@ -82,49 +82,15 @@ void __am_switch(_Context *c) {
 }
 
 int _map(_AddressSpace *as, void *va, void *pa, int prot) {
-  //printf("_map vaddr:0x%x paddr:0x%x\n",va,pa);
-  if(((uint32_t)pa>>12<<12)!=(uint32_t)pa){
-    // printf("_map pa error:0x%x\n",pa);
-    // assert(0);
-  }
-  uint32_t* pdir = (uint32_t*)(as->ptr);
-  uint32_t pde = pdir[PDX(va)];
-  //printf("PDX[0x%x] PTX[0x%x] OFF[0x%x] \n",PDX(va),PTX(va),OFF(va));
-  
-  if((pde&PTE_V)==0){
-    uint32_t *new_pg = pgalloc_usr(1);
-    // memset(new_pg,0,PGSIZE);
-    pdir[PDX(va)] = ((uint32_t)new_pg>>12<<10) | PTE_V;
-    pde=pdir[PDX(va)];
-  }
-  //printf("pde:%x\n",pde);
-  uint32_t *ptab = PTE_ADDR(pde);
-  uint32_t pte = ptab[PTX(va)];
-  //printf("pte:0x%x\n",pte);
-  if((pte&PTE_V)==0){
-    ptab[PTX(va)]=((((uint32_t)pa)&(~0xfff))>>2)|PTE_V;
-    pte = ptab[PTX(va)];
-    // printf("_map vaddr 0x%x =pde:0x%x(0x%x,[%d])=pte:0x%x(0x%x[%d])= paddr:0x%x\n",va,pde,pdir,PDX(va),pte,ptab,PTX(va),pa);
-    return 0;
-  }else{
-    // printf("pte already valid: pde:0x%x pte:0x%x vaddr:0x%x paddr:0x%x\n",pde,pte,va,pa);
-    return -1;
+  PDE* dirs = (PTE *)as->ptr;
+  if (!(dirs[PDX(va)] & PTE_V)) {
+    PTE* new_tabs = (PTE *)(pgalloc_usr(1));
+    dirs[PDX(va)] = (((PTE)new_tabs >> 12) << 10) | PTE_V;
   }
 
-  //uint32_t *pte = ((uint32_t*)(as->ptr))[PDX(va)];
-  // if(!(((uint32_t)pte)&PTE_V)){
-  //   uint32_t *new_pg = pgalloc_usr(1);
-  //   memset(new_pg,0,PGSIZE);
-  //   ((uint32_t*)(as->ptr))[PDX(va)] = ((uint32_t)new_pg) | PTE_V;
-  //   pte = ((uint32_t*)(as->ptr))[PDX(va)];
-  // }
-  // uint32_t* pgentry = ((uint32_t*)(PTE_ADDR(pte)))[PTX(va)];
-  // if((uint32_t)pgentry&PTE_V){
-  //   return PTE_ADDR(pgentry);
-  // }
-  // pa=pgalloc_usr(1);
-  // ((uint32_t*)(PTE_ADDR(pte)))[PTX(va)]=((uint32_t)pa)|PTE_V;
-  // return pa;
+  PTE* tabs = (PTE *)PTE_ADDR(dirs[PDX(va)]);
+  tabs[PTX(va)] = ((((PTE)pa & ~0xfff) >> 12) << 10) | prot | PTE_V;
+  return 0;
 }
 
 _Context *_ucontext(_AddressSpace *as, _Area ustack, _Area kstack, void *entry, void *args) {

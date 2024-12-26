@@ -22,15 +22,22 @@ uintptr_t max (uintptr_t x, uintptr_t y) {
 
 /* The brk() system call handler. */
 int mm_brk(uintptr_t brk, intptr_t increment) {
+  printf("mm_brk\n");
   if (current->max_brk < brk) {
-    for (uintptr_t i = PGROUNDDOWN(max(current->max_brk, brk - increment)); i <= PGROUNDDOWN(brk); i += PGSIZE) {
-      uintptr_t pa = (uintptr_t)new_page(1);
-      _map(&(current->as), (void *)i, (void *)pa, 0);
-    }
-
-    current->max_brk = brk;
+    current->max_brk = brk / PGSIZE * PGSIZE;
+    if (brk % PGSIZE) current->max_brk++;
   }
-
+  if (current->max_brk < brk + increment) {
+    int block_count = (brk + increment - current->max_brk) / PGSIZE;
+    if ((brk + increment - current->max_brk) % PGSIZE) block_count++;
+    for (int i = 0; i < block_count; i++) {
+      uint32_t p_pg = new_page(1);
+      uint32_t v_pg = current->max_brk;
+      _map(&current->as, v_pg, p_pg, 0);
+      printf("brk_map 0x%x->0x%x\n",v_pg,p_pg);
+      current->max_brk += PGSIZE;
+    }
+  }
   return 0;
 }
 

@@ -96,6 +96,7 @@ int _map(_AddressSpace *as, void *va, void *pa, int prot) {
 _Context *_ucontext(_AddressSpace *as, _Area ustack, _Area kstack, void *entry, void *args) {
   _Context* cp = (_Context *)((uint32_t *)ustack.end - 35);
   cp->epc = (uintptr_t)entry;
+  cp->status = 0x40000000;
   cp->GPR2 = 0;
   cp->GPR3 = 0;
   cp->as = as;

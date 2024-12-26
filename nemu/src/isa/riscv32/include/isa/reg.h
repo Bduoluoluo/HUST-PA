@@ -11,7 +11,7 @@ typedef struct {
   } gpr[32];
 
   vaddr_t pc;
-
+  bool INTR;
 } CPU_state;
 
 extern rtlreg_t stvec, sepc, scause, sstatus, satp;

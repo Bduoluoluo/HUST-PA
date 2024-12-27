@@ -17,7 +17,10 @@ vaddr_t exec_once(void) {
   decinfo.seq_pc = cpu.pc;
   isa_exec(&decinfo.seq_pc);
   update_pc();
-  if (isa_query_intr()) update_pc();
+  if (isa_query_intr()) {
+    update_pc();
+    printf("aaaaaaaaa\n");
+  }
 
   return decinfo.seq_pc;
 }

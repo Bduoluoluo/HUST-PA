@@ -8,6 +8,8 @@ _Context* __am_irq_handle(_Context *c) {
   extern void __am_get_cur_as (_Context *c);
   __am_get_cur_as(c);
 
+  int flag = 0;
+
   _Context *next = c;
   if (user_handler) {
     _Event ev = {0};
@@ -35,11 +37,13 @@ _Context* __am_irq_handle(_Context *c) {
       next = c;
     }
 
-    if (ev.event == _EVENT_IRQ_TIMER) printf("aaaaaaaaa\n");
+    if (ev.event == _EVENT_IRQ_TIMER) flag = 1;
   }
 
   extern void __am_switch (_Context *c);
   __am_switch(next);
+
+  if (flag) printf("bbbbbbbb\n");
 
   return next;
 }

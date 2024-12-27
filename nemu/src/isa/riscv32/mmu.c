@@ -35,7 +35,7 @@ typedef uint32_t PDE;
 #define PG_ALIGN __attribute((aligned(PAGE_SIZE)))
 
 static inline paddr_t page_translate(vaddr_t va) {
-  paddr_t ptab = paddr_read(cpu.satp.ppn * 4096 + 4 * PDX(va), 4);
+  paddr_t ptab = paddr_read((satp & 0x3fffff) * 4096 + 4 * PDX(va), 4);
   if(!(ptab & PTE_V) | (!(ptab & PTE_R) && (ptab & PTE_W))){
   	printf("PTE is invalid!\n");
   	assert(0);
@@ -45,7 +45,7 @@ static inline paddr_t page_translate(vaddr_t va) {
 }
 
 uint32_t isa_vaddr_read(vaddr_t addr, int len) {
-  if(cpu.satp.mode){
+  if((satp >> 31) & 1){
   	if (PTE_ADDR(addr) != PTE_ADDR(addr + len - 1)) {
       uint8_t byte[4];
       for (int i = 0; i < len; i++)
@@ -64,7 +64,7 @@ uint32_t isa_vaddr_read(vaddr_t addr, int len) {
 }
 
 void isa_vaddr_write(vaddr_t addr, uint32_t data, int len) {
-  if(cpu.satp.mode){
+  if((satp >> 31) & 1){
   	if (PTE_ADDR(addr) != PTE_ADDR(addr + len - 1)) {
       uint8_t byte[4];
       if (len == 2)

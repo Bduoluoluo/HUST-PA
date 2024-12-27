@@ -8,7 +8,7 @@ const char *regsl[] = {
 };
 
 const char *csr_name[] = {
-  "stvec", "sepc", "scause", "sstatus"
+  "stvec", "sepc", "scause", "sstatus", "satp"
 };
 
 void isa_reg_display () {

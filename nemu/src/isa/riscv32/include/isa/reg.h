@@ -12,18 +12,9 @@ typedef struct {
 
   vaddr_t pc;
 
-  union {
-    struct {
-      uint32_t ppn       :22;
-      uint32_t asid      : 9;
-      uint32_t mode      : 1;
-    };
-    uint32_t val;
-  }satp;
-
 } CPU_state;
 
-extern rtlreg_t stvec, sepc, scause, sstatus;
+extern rtlreg_t stvec, sepc, scause, sstatus, satp;
 
 static inline rtlreg_t* get_csr (uint32_t csr) {
   switch (csr) {
@@ -31,6 +22,7 @@ static inline rtlreg_t* get_csr (uint32_t csr) {
     case 0b000101000001: return &sepc;
     case 0b000101000010: return &scause;
     case 0b000100000000: return &sstatus;
+    case 0b000110000000: return &satp;
     default: panic("csr register undefined!"); return NULL;
   }
 }
@@ -42,6 +34,7 @@ static inline const char* get_csr_name (uint32_t csr) {
     case 0b000101000001: return csr_name[1];
     case 0b000101000010: return csr_name[2];
     case 0b000100000000: return csr_name[3];
+    case 0b000110000000: return csr_name[4];
     default: panic("csr register undefined!"); return NULL;
   }
 }

@@ -22,12 +22,13 @@ void hello_fun(void *arg) {
 extern void naive_uload (PCB *pcb, const char *filename);
 
 void init_proc() {
+  context_kload(&pcb[0], (void *)hello_fun);
   switch_boot_pcb();
 
   Log("Initializing processes...");
 
   // load program here
-  naive_uload(NULL, "/bin/init");
+  // naive_uload(NULL, "/bin/init");
 }
 
 _Context* schedule(_Context *prev) {

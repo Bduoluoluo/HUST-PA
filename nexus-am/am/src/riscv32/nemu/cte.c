@@ -47,7 +47,8 @@ int _cte_init(_Context*(*handler)(_Event, _Context*)) {
 }
 
 _Context *_kcontext(_Area stack, void (*entry)(void *), void *arg) {
-  _Context* cp = (_Context *)((uint32_t *)stack.end - sizeof(_Context));
+  _Context* cp = (_Context *)(stack.end - sizeof(_Context));
+  memset(cp, 0, sizeof(_Context));
   cp->epc = (uintptr_t)entry;
 
   return cp;

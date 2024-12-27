@@ -8,8 +8,8 @@ int main() {
   while (1) {
     j ++;
     if (j == 10000) {
-      char s[100];
-      sprintf(s, "Hello World from Navy-apps for the %dth time!\n", i ++);
+      // printf("Hello World from Navy-apps for the %dth time!\n", i ++);
+      write(1, "Hello World!\n", 13);
       j = 0;
     }
   }

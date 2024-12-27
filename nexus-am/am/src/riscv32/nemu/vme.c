@@ -97,6 +97,7 @@ _Context *_ucontext(_AddressSpace *as, _Area ustack, _Area kstack, void *entry, 
   _Context* cp = ustack.end - sizeof(_Context);
   memset(cp, 0, sizeof(_Context));
   cp->epc = (uint32_t)entry;
+  cp->status = 0x40000000;
   cp->as = as;
 
   return cp;

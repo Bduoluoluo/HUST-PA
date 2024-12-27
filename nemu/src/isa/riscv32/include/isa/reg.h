@@ -12,6 +12,7 @@ typedef struct {
 
   vaddr_t pc;
   bool INTR;
+
 } CPU_state;
 
 extern rtlreg_t stvec, sepc, scause, sstatus, satp;

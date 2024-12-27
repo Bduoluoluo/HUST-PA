@@ -14,9 +14,7 @@ void free_page(void *p) {
   panic("not implement yet");
 }
 
-extern PCB *current;
-
-uintptr_t max (uintptr_t x, uintptr_t y) {
+intptr_t max (intptr_t x, intptr_t y) {
   return x > y ? x : y;
 }
 

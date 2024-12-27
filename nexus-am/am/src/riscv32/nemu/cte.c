@@ -8,7 +8,9 @@ extern void __am_get_cur_as (_Context *c);
 extern void __am_switch (_Context *c);
 
 _Context* __am_irq_handle(_Context *c) {
+  extern void __am_get_cur_as (_Context *c);
   __am_get_cur_as(c);
+
   _Context *next = c;
   if (user_handler) {
     _Event ev = {0};
@@ -37,7 +39,9 @@ _Context* __am_irq_handle(_Context *c) {
     }
   }
 
+  extern void __am_switch (_Context *c);
   __am_switch(next);
+
   return next;
 }
 
@@ -54,7 +58,8 @@ int _cte_init(_Context*(*handler)(_Event, _Context*)) {
 }
 
 _Context *_kcontext(_Area stack, void (*entry)(void *), void *arg) {
-  _Context* cp = (_Context *)((uint32_t *)stack.end - 35);
+  _Context* cp = (_Context *)(stack.end - sizeof(_Context));
+  memset(cp, 0, sizeof(_Context));
   cp->epc = (uintptr_t)entry;
 
   return cp;

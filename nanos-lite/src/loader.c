@@ -10,8 +10,6 @@
 # define Elf_Phdr Elf32_Phdr
 #endif
 
-extern void* new_page (size_t nr_page);
-
 static uintptr_t loader(PCB *pcb, const char *filename) {
   int fd = fs_open(filename, 0, 0);
 
@@ -58,6 +56,7 @@ void context_kload(PCB *pcb, void *entry) {
 }
 
 void context_uload(PCB *pcb, const char *filename) {
+  memset(pcb, 0, sizeof(PCB));
   _protect(&(pcb->as));
   uintptr_t entry = loader(pcb, filename);
 

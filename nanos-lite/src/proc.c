@@ -22,8 +22,8 @@ void hello_fun(void *arg) {
 extern void naive_uload (PCB *pcb, const char *filename);
 
 void init_proc() {
-  context_kload(&pcb[0], (void *)hello_fun);
-  context_uload(&pcb[1], "/bin/pal");
+  // context_kload(&pcb[0], (void *)hello_fun);
+  context_uload(&pcb[0], "/bin/dummy");
   switch_boot_pcb();
 
   Log("Initializing processes...");
@@ -34,8 +34,8 @@ void init_proc() {
 
 _Context* schedule(_Context *prev) {
   current->cp = prev;
-  // current = &pcb[0];
-  current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+  current = &pcb[0];
+  // current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
 
   return current->cp;
 }

@@ -118,7 +118,6 @@ int printf(const char *fmt, ...) {
           if (*p != 'd') return -1;
           if (width <= 0 || width > 9) return -1;
           int num = va_arg(args, int);
-          // char s[65];
           size_t len = i2s(ss, num, -1, width);
           m += len;
           for (size_t i = 0; i < len; i ++) _putc(ss[i]);

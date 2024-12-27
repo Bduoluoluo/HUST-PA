@@ -8,9 +8,9 @@ make_EHelper (ecall) {
 }
 
 make_EHelper (sret) {
-    printf("%x b\n", sstatus);
+    // printf("%x b\n", sstatus);
     sstatus = (sstatus & 0xffffffdd) | ((sstatus & 0x20) >> 4) | 0x20;
-    printf("%x a\n", sstatus);
+    // printf("%x a\n", sstatus);
     rtl_j(sepc + 4);
 
     print_asm("sret");

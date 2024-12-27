@@ -3,8 +3,10 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
+char str[65];
+char ss[65];
+
 size_t i2s (char *dst, int d, size_t n, size_t width) {
-  char str[65];
   size_t ret = 0, len = 0;
   int neg = 0;
   if (d < 0) neg = 1, d = -d;
@@ -35,7 +37,6 @@ size_t i2s (char *dst, int d, size_t n, size_t width) {
 }
 
 size_t hi2s (char *dst, unsigned d, size_t n, size_t width) {
-  char str[25];
   size_t ret = 0, len = 0;
   if (d == 0) {
     str[len ++] = '0';
@@ -73,26 +74,23 @@ int printf(const char *fmt, ...) {
       switch (*p) {
         case 'd': {
           int num = va_arg(args, int);
-          char s[65];
-          size_t len = i2s(s, num, -1, 0);
+          size_t len = i2s(ss, num, -1, 0);
           m += len;
-          for (size_t i = 0; i < len; i ++) _putc(s[i]);
+          for (size_t i = 0; i < len; i ++) _putc(ss[i]);
           break;
         }
         case 'x': {
           unsigned num = va_arg(args, unsigned);
-          char s[25];
-          size_t len = hi2s(s, num, -1, 0);
+          size_t len = hi2s(ss, num, -1, 0);
           m += len;
-          for (size_t i = 0; i < len; i ++) _putc(s[i]);
+          for (size_t i = 0; i < len; i ++) _putc(ss[i]);
           break;
         }
         case 'p': {
           unsigned num = va_arg(args, unsigned);
-          char s[25];
-          size_t len = hi2s(s, num, -1, 8);
+          size_t len = hi2s(ss, num, -1, 8);
           m += len;
-          for (size_t i = 0; i < len; i ++) _putc(s[i]);
+          for (size_t i = 0; i < len; i ++) _putc(ss[i]);
           break;
         }
         case 's': {
@@ -120,10 +118,10 @@ int printf(const char *fmt, ...) {
           if (*p != 'd') return -1;
           if (width <= 0 || width > 9) return -1;
           int num = va_arg(args, int);
-          char s[65];
-          size_t len = i2s(s, num, -1, width);
+          // char s[65];
+          size_t len = i2s(ss, num, -1, width);
           m += len;
-          for (size_t i = 0; i < len; i ++) _putc(s[i]);
+          for (size_t i = 0; i < len; i ++) _putc(ss[i]);
           break;
         }
         default: return -1;

@@ -43,7 +43,7 @@ _Context* __am_irq_handle(_Context *c) {
   extern void __am_switch (_Context *c);
   __am_switch(next);
 
-  if (flag) printf("bbbbbbbb\n");
+  if (flag) printf("%x %x\n", c, next);
 
   return next;
 }

@@ -30,12 +30,12 @@ _Context* __am_irq_handle(_Context *c) {
         ev.event = _EVENT_ERROR; break;
     }
 
-    if (ev.event == _EVENT_IRQ_TIMER) printf("aaaaaaaaa\n");
-
     next = user_handler(ev, c);
     if (next == NULL) {
       next = c;
     }
+
+    if (ev.event == _EVENT_IRQ_TIMER) printf("aaaaaaaaa\n");
   }
 
   extern void __am_switch (_Context *c);

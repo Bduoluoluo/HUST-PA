@@ -25,7 +25,6 @@ _Context* __am_irq_handle(_Context *c) {
       case 13:
         ev.event = _EVENT_SYSCALL; break;
       case 0x80000005:
-        printf("aaaaaaaaaaa\n");
         ev.event = _EVENT_IRQ_TIMER; break;
       default:
         ev.event = _EVENT_ERROR; break;

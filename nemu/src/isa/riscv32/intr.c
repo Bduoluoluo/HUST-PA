@@ -9,7 +9,8 @@ void raise_intr(uint32_t NO, vaddr_t epc) {
 
   rtl_li(&sepc, epc);
   rtl_li(&scause, NO);
-  sstatus = (sstatus & 0xbbffffff) | ((sstatus & 0x40000000) >> 4);
+  // sstatus = (sstatus & 0xbbffffff) | ((sstatus & 0x40000000) >> 4);
+  sstatus = 0;
   rtl_jr(&stvec);
 }
 

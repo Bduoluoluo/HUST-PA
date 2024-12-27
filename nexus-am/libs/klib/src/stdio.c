@@ -3,135 +3,206 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
-const char lower_dict[] = "0123456789abcdef";
-const char upper_dict[] = "0123456789ABCDEF";
+char str[65];
+char ss[65];
 
-// 借鉴了 https://github.com/atgreen/FreeRTOS/blob/master/Demo/CORTEX_STM32F103_Primer_GCC/printf-stdarg.c
-static inline int _printc(char **out, char c) {
-  if (out) {
-    **out = c;
-    (*out)++;
-  } else {
-    _putc(c);
+size_t i2s (char *dst, int d, size_t n, size_t width) {
+  size_t ret = 0, len = 0;
+  int neg = 0;
+  if (d < 0) neg = 1, d = -d;
+  else if (d == 0) {
+    str[len ++] = '0';
+    if (width) width --;
   }
-  return 1;
+  while (d) {
+    str[len ++] = d % 10 + '0';
+    d /= 10;
+    if (width) width --;
+  }
+  if (neg) {
+    str[len ++] = '-';
+    if (width) width --;
+  }
+  while (width) {
+    str[len ++] = '0';
+    width --;
+  }
+  while (n && len) {
+    *dst = str[-- len];
+    dst ++;
+    n --;
+    ret ++;
+  }
+  return ret;
 }
 
-static inline int _prints(char **out, const char *s) {
-  int cnt = 0;
-  while (*s != '\0') {
-    cnt += _printc(out, *(s++));
+size_t hi2s (char *dst, unsigned d, size_t n, size_t width) {
+  size_t ret = 0, len = 0;
+  if (d == 0) {
+    str[len ++] = '0';
+    if (width) width --;
   }
-  return cnt;
-}
-
-static inline int _printi(char **out, int num, int base, int use_upper, int sign) {
-  assert(base <= 16 && base >= 2);
-
-  const int buf_sz = 100;
-  char buf[buf_sz];
-  buf[buf_sz - 1] = '\0';
-  const char *dict = use_upper ? upper_dict : lower_dict;
-
-  if (num == 0) {
-    return _printc(out, dict[0]);
+  while (d) {
+    if (d % 16 < 10) str[len ++] = d % 16 + '0';
+    else str[len ++] = d % 16 - 10 + 'a';
+    d /= 16;
+    if (width) width --;
   }
-
-  char *p = &buf[buf_sz - 1];
-  if (!sign) {
-    unsigned int n = *(unsigned int *)&num;
-    while (n != 0) {
-      p--;
-      *p = dict[n % base];
-      n /= base;
-    }
-  } else {
-    int is_neg = 0;
-    if (num < 0) {
-      num = -num;
-      is_neg = 1;
-    }
-
-    while (num != 0) {
-      p--;
-      *p = dict[num % base];
-      num /= base;
-    }
-
-    if (is_neg) {
-      p--;
-      *p = '-';
-    }
+  while (width) {
+    str[len ++] = '0';
+    width --;
   }
-
-  return _prints(out, p);
-}
-
-static inline int _print(char **out, const char *fmt, va_list ap) {
-  const char *p = fmt;
-  int cnt = 0;
-  int t = 0;
-  while (*p) {
-    if (*p == '%') {
-      p++;
-      LOOP:switch (*p) {
-        case 'c':
-          cnt += _printc(out, va_arg(ap, int));
-          break;
-        case 'd':
-          cnt += _printi(out, va_arg(ap, int), 10, 0, 1);
-          break;
-        case 'u':
-          cnt += _printi(out, va_arg(ap, int), 10, 0, 0);
-          break;
-        case 'x':
-          cnt += _printi(out, va_arg(ap, int), 16, 0, 0);
-          break;
-        case 'X':
-          cnt += _printi(out, va_arg(ap, int), 16, 1, 0);
-          break;
-        case 's':
-          cnt += _prints(out, va_arg(ap, char *));
-          break;
-        default:
-          t = 0;
-          while(*p >= '0' && *p <= '9'){
-            ++p;
-            t += 1;
-          }
-          if(t){
-            goto LOOP;
-          }
-          break;
-      }
-    } else {
-      cnt += _printc(out, *p);
-    }
-    p++;
+  while (n && len) {
+    *dst = str[-- len];
+    dst ++;
+    n --;
+    ret ++;
   }
-  if (out)
-    **out = '\0';
-  return cnt;
+  return ret;
 }
 
 int printf(const char *fmt, ...) {
-  va_list ap;
-  va_start(ap, fmt);
-  int cnt = _print(NULL, fmt, ap);
-  va_end(ap);
-  return cnt;
+  va_list args;
+  size_t m = 0;
+  const char *p = fmt;
+
+  va_start(args, fmt);
+
+  while (*p != '\0') {
+    if (*p == '%') {
+      p ++;
+      switch (*p) {
+        case 'd': {
+          int num = va_arg(args, int);
+          size_t len = i2s(ss, num, -1, 0);
+          m += len;
+          for (size_t i = 0; i < len; i ++) _putc(ss[i]);
+          break;
+        }
+        case 'x': {
+          unsigned num = va_arg(args, unsigned);
+          size_t len = hi2s(ss, num, -1, 0);
+          m += len;
+          for (size_t i = 0; i < len; i ++) _putc(ss[i]);
+          break;
+        }
+        case 'p': {
+          unsigned num = va_arg(args, unsigned);
+          size_t len = hi2s(ss, num, -1, 8);
+          m += len;
+          for (size_t i = 0; i < len; i ++) _putc(ss[i]);
+          break;
+        }
+        case 's': {
+          char *s = va_arg(args, char*);
+          size_t len = strlen(s);
+          m += len;
+          for (size_t i = 0; i < len; i ++) _putc(s[i]);
+          break;
+        }
+        case 'c': {
+          char c = va_arg(args, char);
+          _putc(c);
+          m ++;
+          break;
+        }
+        case '%': {
+          _putc('%');
+          m ++;
+          break;
+        }
+        case '0': {
+          p ++;
+          int width = *p - '0';
+          p ++;
+          if (*p != 'd') return -1;
+          if (width <= 0 || width > 9) return -1;
+          int num = va_arg(args, int);
+          size_t len = i2s(ss, num, -1, width);
+          m += len;
+          for (size_t i = 0; i < len; i ++) _putc(ss[i]);
+          break;
+        }
+        default: return -1;
+      }
+    } else {
+      _putc(*p);
+      m ++;
+    }
+    p ++;
+  }
+
+  va_end(args);
+
+  return m;
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
-  return _print(&out, fmt, ap);
+  return 0;
 }
 
 int sprintf(char *out, const char *fmt, ...) {
-  va_list ap;
-  va_start(ap, fmt);
-  int cnt = _print(&out, fmt, ap);
-  va_end(ap);
-  return cnt;
+  va_list args;
+  size_t m = 0;
+  const char *p = fmt;
+
+  va_start(args, fmt);
+
+  while (*p != '\0') {
+    if (*p == '%') {
+      p ++;
+      switch (*p) {
+        case 'd': {
+          int num = va_arg(args, int);
+          m += i2s(out + m, num, -1, 0);
+          break;
+        }
+        case 'x': {
+          unsigned num = va_arg(args, unsigned);
+          m += hi2s(out + m, num, -1, 0);
+          break;
+        }
+        case 'p': {
+          unsigned num = va_arg(args, unsigned);
+          m += hi2s(out + m, num, -1, 8);
+          break;
+        }
+        case 's': {
+          char *s = va_arg(args, char*);
+          size_t len = strlen(s);
+          strcpy(out + m, s);
+          m += len;
+          break;
+        }
+        case 'c': {
+          char c = va_arg(args, char);
+          out[m ++] = c;
+          break;
+        }
+        case '%': {
+          out[m ++] = '%';
+          break;
+        }
+        case '0': {
+          p ++;
+          int width = *p - '0';
+          p ++;
+          if (*p != 'd') return -1;
+          if (width <= 0 || width > 9) return -1;
+          int num = va_arg(args, int);
+          m += i2s(out + m, num, -1, width);
+          break;
+        }
+        default: return -1;
+      }
+    } else out[m ++] = *p;
+    p ++;
+  }
+  out[m] = '\0';
+
+  va_end(args);
+
+  return m;
 }
 
 int snprintf(char *out, size_t n, const char *fmt, ...) {

@@ -8,6 +8,7 @@ make_EHelper (ecall) {
 }
 
 make_EHelper (sret) {
+    sstatus = (sstatus & 0xbfffffff) | ((sstatus & 0x04000000) << 4);
     rtl_j(sepc + 4);
 
     print_asm("sret");

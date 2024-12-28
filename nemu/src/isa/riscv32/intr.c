@@ -10,8 +10,8 @@ void raise_intr(uint32_t NO, vaddr_t epc) {
   rtl_li(&sepc, epc);
   rtl_li(&scause, NO);
   // sstatus = (sstatus & 0xffffffdd) | ((sstatus & 0x2) << 4);
-  // cpu.sstatus.SPIE = cpu.sstatus.SIE;
-  // cpu.sstatus.SIE = 0;
+  cpu.sstatus.SPIE = cpu.sstatus.SIE;
+  cpu.sstatus.SIE = 0;
   // printf("%d %d %x raiseintr\n", cpu.sstatus.SIE, cpu.sstatus.SPIE, NO);
   rtl_jr(&stvec);
 }

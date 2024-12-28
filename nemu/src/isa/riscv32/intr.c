@@ -17,7 +17,7 @@ static int timer = 0;
 
 bool isa_query_intr(void) {
   if (cpu.INTR && (sstatus & 0x2)) {
-    if (timer < 100000000) timer ++;
+    if (timer < 10000000) timer ++;
     else {
       timer = 0;
       cpu.INTR = false;

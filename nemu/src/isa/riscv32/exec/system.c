@@ -9,7 +9,7 @@ make_EHelper (ecall) {
 
 make_EHelper (sret) {
     // sstatus = (sstatus & 0xffffffdd) | ((sstatus & 0x20) >> 4) | 0x20;
-    // cpu.sstatus.SIE = cpu.sstatus.SPIE;
+    cpu.sstatus.SIE = cpu.sstatus.SPIE;
     // cpu.sstatus.SPIE = 1;
     // printf("%d %d sret\n", cpu.sstatus.SIE, cpu.sstatus.SPIE);
     rtl_j(sepc + 4);

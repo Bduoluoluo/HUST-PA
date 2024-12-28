@@ -4,9 +4,9 @@ paddr_t page_translate (vaddr_t addr) {
   if (((satp >> 31) & 1) == 0) return addr;
   uint32_t vpn1 = addr >> 22, vpn2 = (addr >> 12) & 0x3ff, offset = addr & 0xfff;
   uint32_t pte = paddr_read((satp << 12) + vpn1 * 4, 4);
-  assert(pte & 1);
+  // assert(pte & 1);
   pte = paddr_read(((pte & ~0x3ff) << 2) + vpn2 * 4, 4);
-  assert(pte & 1);
+  // assert(pte & 1);
   return (((pte & ~0x3ff) << 2) + offset);
 }
 

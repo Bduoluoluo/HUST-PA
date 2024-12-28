@@ -16,6 +16,7 @@ void raise_intr(uint32_t NO, vaddr_t epc) {
 bool isa_query_intr(void) {
   if (cpu.INTR && (sstatus & 0x2)) {
     cpu.INTR = false;
+    printf("aaaaaaaaaaa\n");
     raise_intr(IRQ_TIMER, cpu.pc);
     return true;
   }

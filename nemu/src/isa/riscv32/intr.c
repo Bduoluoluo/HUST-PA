@@ -17,6 +17,7 @@ void raise_intr(uint32_t NO, vaddr_t epc) {
 }
 
 bool isa_query_intr(void) {
+  if (cpu.sstatus.SIE) printf("aaa\n");
   if (cpu.INTR && (cpu.sstatus.SIE)) {
     printf("%d %d query\n", cpu.sstatus.SIE, cpu.sstatus.SPIE);
     cpu.INTR = false;

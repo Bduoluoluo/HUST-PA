@@ -13,12 +13,9 @@ void raise_intr(uint32_t NO, vaddr_t epc) {
   rtl_jr(&stvec);
 }
 
-int aa = 0;
-
 bool isa_query_intr(void) {
   if (cpu.INTR && (sstatus & 0x2)) {
     cpu.INTR = false;
-    printf("aaaaaaaaaaa %d\n", aa ++);
     raise_intr(IRQ_TIMER, cpu.pc);
     return true;
   }

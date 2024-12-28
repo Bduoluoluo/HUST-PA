@@ -12,7 +12,7 @@ void raise_intr(uint32_t NO, vaddr_t epc) {
   // sstatus = (sstatus & 0xffffffdd) | ((sstatus & 0x2) << 4);
   cpu.sstatus.SPIE = cpu.sstatus.SIE;
   cpu.sstatus.SIE = 0;
-  printf("%d %d b\n", cpu.sstatus.SIE, cpu.sstatus.SPIE);
+  printf("%d %d %d b\n", cpu.sstatus.SIE, cpu.sstatus.SPIE, NO);
   rtl_jr(&stvec);
 }
 

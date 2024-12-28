@@ -13,39 +13,16 @@ typedef struct {
   vaddr_t pc;
   bool INTR;
 
-  union{
-    struct {
-      uint32_t      : 1;
-      uint32_t SIE  : 1;
-      uint32_t      : 2;
-      uint32_t UPIE : 1;
-      uint32_t SPIE : 1;
-      uint32_t      : 2;
-      uint32_t SPP  : 1;
-      uint32_t      : 4;
-      uint32_t FS   : 2;
-      uint32_t XS   : 2;
-      uint32_t      : 1;
-      uint32_t SUM  : 1;
-      uint32_t MXR  : 1;
-      uint32_t      :11;
-      uint32_t SD   : 1;
-    };
-    uint32_t val;
-  } sstatus;
-
 } CPU_state;
 
-extern rtlreg_t stvec, sepc, scause, satp;
-
-extern CPU_state cpu;
+extern rtlreg_t stvec, sepc, scause, sstatus, satp;
 
 static inline rtlreg_t* get_csr (uint32_t csr) {
   switch (csr) {
     case 0b000100000101: return &stvec;
     case 0b000101000001: return &sepc;
     case 0b000101000010: return &scause;
-    case 0b000100000000: return &cpu.sstatus.val;
+    case 0b000100000000: return &sstatus;
     case 0b000110000000: return &satp;
     default: panic("csr register undefined!"); return NULL;
   }

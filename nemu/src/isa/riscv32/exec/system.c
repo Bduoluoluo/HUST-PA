@@ -12,6 +12,7 @@ make_EHelper (sret) {
     printf("%d\n", cpu.sstatus.SIE);
     cpu.sstatus.SIE = cpu.sstatus.SPIE;
     cpu.sstatus.SPIE = 1;
+    printf("%d\n", cpu.sstatus.SIE);
     rtl_j(sepc + 4);
 
     print_asm("sret");

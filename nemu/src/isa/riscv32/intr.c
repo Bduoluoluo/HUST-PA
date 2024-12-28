@@ -12,13 +12,13 @@ void raise_intr(uint32_t NO, vaddr_t epc) {
   // sstatus = (sstatus & 0xffffffdd) | ((sstatus & 0x2) << 4);
   cpu.sstatus.SPIE = cpu.sstatus.SIE;
   cpu.sstatus.SIE = 0;
-  printf("%d %d %x b\n", cpu.sstatus.SIE, cpu.sstatus.SPIE, NO);
+  printf("%d %d %x raise_intr\n", cpu.sstatus.SIE, cpu.sstatus.SPIE, NO);
   rtl_jr(&stvec);
 }
 
 bool isa_query_intr(void) {
   if (cpu.INTR && (cpu.sstatus.SIE)) {
-    printf("%d %d a\n", cpu.sstatus.SIE, cpu.sstatus.SPIE);
+    printf("%d %d query\n", cpu.sstatus.SIE, cpu.sstatus.SPIE);
     cpu.INTR = false;
     raise_intr(IRQ_TIMER, cpu.pc);
     return true;

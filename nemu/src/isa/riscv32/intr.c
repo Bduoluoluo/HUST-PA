@@ -13,7 +13,7 @@ void raise_intr(uint32_t NO, vaddr_t epc) {
   rtl_jr(&stvec);
 }
 
-int timer = 0;
+static int timer = 0;
 
 bool isa_query_intr(void) {
   if (cpu.INTR && (sstatus & 0x2)) {

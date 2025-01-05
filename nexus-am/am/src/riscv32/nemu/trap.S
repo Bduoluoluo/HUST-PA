@@ -17,6 +17,7 @@ f(30) f(31)
 #define OFFSET_CAUSE  (32 * 4)
 #define OFFSET_STATUS (33 * 4)
 #define OFFSET_EPC    (34 * 4)
+#define OFFSET_SATP   ( 1 * 4)
 
 .globl __am_asm_trap
 __am_asm_trap:
@@ -31,10 +32,12 @@ __am_asm_trap:
   csrr t0, scause
   csrr t1, sstatus
   csrr t2, sepc
+  csrr t3, satp
 
   sw t0, OFFSET_CAUSE(sp)
   sw t1, OFFSET_STATUS(sp)
   sw t2, OFFSET_EPC(sp)
+  sw t3, OFFSET_SATP(sp)
 
   mv a0, sp
   jal __am_irq_handle
@@ -42,8 +45,10 @@ __am_asm_trap:
   
   lw t1, OFFSET_STATUS(sp)
   lw t2, OFFSET_EPC(sp)
+  lw t3, OFFSET_SATP(sp)
   csrw sstatus, t1
   csrw sepc, t2
+  csrw satp, t3
 
   MAP(REGS, POP)
 

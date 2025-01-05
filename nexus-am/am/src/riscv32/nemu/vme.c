@@ -78,6 +78,7 @@ void __am_switch(_Context *c) {
   if (vme_enable) {
     set_satp(c->as->ptr);
     cur_as = c->as;
+    printf("%x aaaaaaaaaaaaaaaa\n", cur_as);
   }
 }
 
